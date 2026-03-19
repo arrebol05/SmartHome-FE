@@ -29,16 +29,7 @@ A modern, responsive Smart Home management application built with React, TypeScr
 ```
 src/
 ├── components/          # Reusable components
-│   ├── Layout/         # Main layout
-│   ├── Header/         # Header component
-│   ├── Sidebar/        # Sidebar navigation
-│   └── DeviceCard/     # Device card component
 ├── pages/              # Page components
-│   ├── Dashboard.tsx
-│   ├── Devices.tsx
-│   ├── Scenes.tsx
-│   ├── Settings.tsx
-│   └── NotFound.tsx
 ├── services/           # API services
 │   └── api.ts
 ├── hooks/              # Custom hooks
@@ -150,11 +141,3 @@ The app expects a backend API at the configured `VITE_API_URL`. Update the API s
 2. Commit your changes (`git commit -m 'Add amazing feature'`)
 3. Push to the branch (`git push origin feature/amazing-feature`)
 4. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For support, email support@smarthome.com or create an issue in the repository.
