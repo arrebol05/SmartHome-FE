@@ -2,8 +2,11 @@ import { useMemo, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
+import { UI } from "@/constants/ui";
+
+
 import {
-  Home,
+   Home,
   Zap,
   LayoutGrid,
   Clock3,
@@ -128,11 +131,11 @@ function renderDeviceIcon(type: SmartDevice["iconType"], active: boolean) {
 
   switch (type) {
     case "star":
-      return <Star className={className} size={20} />;
+      return <Star className={className} size={UI.DEVICE_ICON_SIZE} />;
     case "fan":
-      return <Fan className={className} size={20} />;
+      return <Fan className={className} size={UI.DEVICE_ICON_SIZE} />;
     case "monitor":
-      return <Monitor className={className} size={20} />;
+      return <Monitor className={className} size={UI.DEVICE_ICON_SIZE} />;
     default:
       return <div className="home-device-placeholder" />;
   }
@@ -183,12 +186,12 @@ export default function HomePage() {
           type="button"
           onClick={() => navigate("/home")}
         >
-          <Home size={18} />
+          <Home size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
         <div className="home-sidebar-links">
           <button className="home-nav-ghost" type="button">
-            <Zap size={18} />
+            <Zap size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
           <button
@@ -196,7 +199,7 @@ export default function HomePage() {
             type="button"
             onClick={() => navigate("/devices")}
           >
-            <LayoutGrid size={18} />
+            <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
           <button
@@ -204,15 +207,19 @@ export default function HomePage() {
             type="button"
             onClick={() => navigate("/timers")}
           >
-            <Clock3 size={18} />
+            <Clock3 size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
           <button className="home-nav-ghost" type="button">
-            <LayoutGrid size={18} />
+            <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
-          <button className="home-nav-btn blue" type="button">
-            <Settings size={18} />
+          <button 
+            className="home-nav-btn blue" 
+            type="button"
+            onClick={() => navigate("/settings")}
+          >
+            <Settings size={UI.SIDEBAR_ICON_SIZE} />
           </button>
         </div>
       </aside>
@@ -271,7 +278,7 @@ export default function HomePage() {
 
           <div className="home-topbar-right">
             <div className="home-search-box">
-              <Search size={18} />
+              <Search size={UI.TOPBAR_ICON_SIZE} />
               <input
                 type="text"
                 placeholder="Search any devices here"
@@ -283,7 +290,7 @@ export default function HomePage() {
             <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
 
             <button className="home-bell-btn" type="button">
-              <Bell size={18} />
+              <Bell size={UI.TOPBAR_ICON_SIZE} />
             </button>
           </div>
         </header>
@@ -293,7 +300,7 @@ export default function HomePage() {
             <div className="home-circle-card">
               <div className="home-card-head">
                 <h4>Độ ẩm</h4>
-                <Droplets size={18} />
+                <Droplets size={UI.TOPBAR_ICON_SIZE} />
               </div>
 
               <div className="home-ring-wrap">

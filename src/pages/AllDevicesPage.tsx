@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
+import { UI } from "@/constants/ui";
 import {
   Home,
   Zap,
@@ -30,21 +31,156 @@ type Device = {
 };
 
 const initialDevices: Device[] = [
-  { id: 1, name: "Smart LED", room: "Phòng khách", consumption: "12W", lastUsed: "1 giờ trước", status: "Hoạt động", active: true, iconType: "star" },
-  { id: 2, name: "Smart Fan", room: "Phòng khách", consumption: "75W", lastUsed: "2 giờ trước", status: "Hoạt động", active: true, iconType: "fan" },
-  { id: 3, name: "Air Conditioner", room: "Phòng khách", consumption: "0W", lastUsed: "Hôm qua", status: "Tắt", active: false, iconType: "blank" },
-  { id: 4, name: "TV", room: "Phòng khách", consumption: "120W", lastUsed: "30 phút trước", status: "Hoạt động", active: true, iconType: "monitor" },
-  { id: 5, name: "Bedroom Light", room: "Phòng ngủ", consumption: "0W", lastUsed: "8 giờ trước", status: "Tắt", active: false, iconType: "star" },
-  { id: 6, name: "Ceiling Fan", room: "Phòng ngủ", consumption: "60W", lastUsed: "15 phút trước", status: "Hoạt động", active: true, iconType: "fan" },
-  { id: 7, name: "AC Unit", room: "Phòng ngủ", consumption: "1400W", lastUsed: "3 giờ trước", status: "Hoạt động", active: true, iconType: "blank" },
-  { id: 8, name: "Smart Speaker", room: "Phòng ngủ", consumption: "0W", lastUsed: "2 ngày trước", status: "Tắt", active: false, iconType: "blank" },
-  { id: 9, name: "Kitchen Light", room: "Phòng bếp", consumption: "18W", lastUsed: "1 giờ trước", status: "Hoạt động", active: true, iconType: "star" },
-  { id: 10, name: "Exhaust Fan", room: "Phòng bếp", consumption: "0W", lastUsed: "12 giờ trước", status: "Tắt", active: false, iconType: "blank" },
-  { id: 11, name: "Security Camera", room: "Phòng bếp", consumption: "8W", lastUsed: "10 phút trước", status: "Hoạt động", active: true, iconType: "camera" },
-  { id: 12, name: "Dining Light", room: "Nhà ăn", consumption: "0W", lastUsed: "3 ngày trước", status: "Tắt", active: false, iconType: "star" },
-  { id: 13, name: "Smart TV", room: "Nhà ăn", consumption: "0W", lastUsed: "4 ngày trước", status: "Tắt", active: false, iconType: "monitor" },
-  { id: 14, name: "Play Room Light", room: "Sân vườn", consumption: "25W", lastUsed: "4 giờ trước", status: "Hoạt động", active: true, iconType: "star" },
-  { id: 15, name: "Game Console", room: "Phòng khách", consumption: "150W", lastUsed: "6 giờ trước", status: "Hoạt động", active: true, iconType: "monitor" },
+  {
+    id: 1,
+    name: "Smart LED",
+    room: "Phòng khách",
+    consumption: "12W",
+    lastUsed: "1 giờ trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "star",
+  },
+  {
+    id: 2,
+    name: "Smart Fan",
+    room: "Phòng khách",
+    consumption: "75W",
+    lastUsed: "2 giờ trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "fan",
+  },
+  {
+    id: 3,
+    name: "Air Conditioner",
+    room: "Phòng khách",
+    consumption: "0W",
+    lastUsed: "Hôm qua",
+    status: "Tắt",
+    active: false,
+    iconType: "blank",
+  },
+  {
+    id: 4,
+    name: "TV",
+    room: "Phòng khách",
+    consumption: "120W",
+    lastUsed: "30 phút trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "monitor",
+  },
+  {
+    id: 5,
+    name: "Bedroom Light",
+    room: "Phòng ngủ",
+    consumption: "0W",
+    lastUsed: "8 giờ trước",
+    status: "Tắt",
+    active: false,
+    iconType: "star",
+  },
+  {
+    id: 6,
+    name: "Ceiling Fan",
+    room: "Phòng ngủ",
+    consumption: "60W",
+    lastUsed: "15 phút trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "fan",
+  },
+  {
+    id: 7,
+    name: "AC Unit",
+    room: "Phòng ngủ",
+    consumption: "1400W",
+    lastUsed: "3 giờ trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "blank",
+  },
+  {
+    id: 8,
+    name: "Smart Speaker",
+    room: "Phòng ngủ",
+    consumption: "0W",
+    lastUsed: "2 ngày trước",
+    status: "Tắt",
+    active: false,
+    iconType: "blank",
+  },
+  {
+    id: 9,
+    name: "Kitchen Light",
+    room: "Phòng bếp",
+    consumption: "18W",
+    lastUsed: "1 giờ trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "star",
+  },
+  {
+    id: 10,
+    name: "Exhaust Fan",
+    room: "Phòng bếp",
+    consumption: "0W",
+    lastUsed: "12 giờ trước",
+    status: "Tắt",
+    active: false,
+    iconType: "blank",
+  },
+  {
+    id: 11,
+    name: "Security Camera",
+    room: "Phòng bếp",
+    consumption: "8W",
+    lastUsed: "10 phút trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "camera",
+  },
+  {
+    id: 12,
+    name: "Dining Light",
+    room: "Nhà ăn",
+    consumption: "0W",
+    lastUsed: "3 ngày trước",
+    status: "Tắt",
+    active: false,
+    iconType: "star",
+  },
+  {
+    id: 13,
+    name: "Smart TV",
+    room: "Nhà ăn",
+    consumption: "0W",
+    lastUsed: "4 ngày trước",
+    status: "Tắt",
+    active: false,
+    iconType: "monitor",
+  },
+  {
+    id: 14,
+    name: "Play Room Light",
+    room: "Sân vườn",
+    consumption: "25W",
+    lastUsed: "4 giờ trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "star",
+  },
+  {
+    id: 15,
+    name: "Game Console",
+    room: "Phòng khách",
+    consumption: "150W",
+    lastUsed: "6 giờ trước",
+    status: "Hoạt động",
+    active: true,
+    iconType: "monitor",
+  },
 ];
 
 const roomTabs = [
@@ -99,10 +235,12 @@ function DeviceCard({
             {device.consumption}
           </strong>
         </div>
+
         <div className="meta-row">
           <span>Dùng lần cuối:</span>
           <strong className="normal">{device.lastUsed}</strong>
         </div>
+
         <div className="meta-row">
           <span>Trạng thái:</span>
           <strong className={device.active ? "green" : "normal"}>
@@ -123,13 +261,13 @@ function renderDeviceIcon(type: Device["iconType"], active: boolean) {
 
   switch (type) {
     case "star":
-      return <Star className={className} size={20} />;
+      return <Star className={className} size={UI.DEVICE_ICON_SIZE} />;
     case "fan":
-      return <Fan className={className} size={20} />;
+      return <Fan className={className} size={UI.DEVICE_ICON_SIZE} />;
     case "monitor":
-      return <Monitor className={className} size={20} />;
+      return <Monitor className={className} size={UI.DEVICE_ICON_SIZE} />;
     case "camera":
-      return <Camera className={className} size={20} />;
+      return <Camera className={className} size={UI.DEVICE_ICON_SIZE} />;
     default:
       return <div className="device-placeholder-icon" />;
   }
@@ -202,30 +340,33 @@ export default function AllDevicesPage() {
   ).size;
 
   return (
-    <div className={`all-devices-page ${themeMode === "dark" ? "dark-mode" : ""}`}>
+    <div
+      className={`all-devices-page ${themeMode === "dark" ? "dark-mode" : ""}`}
+    >
       <aside className="side-nav">
         <div className="side-nav-logo">
           <button
             className="side-nav-item"
             type="button"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
             title="Trang chủ"
           >
-            <Home size={18} />
+            <Home size={UI.SIDEBAR_ICON_SIZE} />
           </button>
         </div>
 
         <div className="side-nav-links">
           <button className="side-nav-ghost" type="button" title="Điện năng">
-            <Zap size={18} />
+            <Zap size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
           <button
             className="side-nav-item active"
             type="button"
             title="Thiết bị"
+            onClick={() => navigate("/devices")}
           >
-            <LayoutGrid size={18} />
+            <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
           <button
@@ -234,15 +375,24 @@ export default function AllDevicesPage() {
             title="Lịch hẹn giờ"
             onClick={() => navigate("/timers")}
           >
-            <Clock3 size={18} />
+            <Clock3 size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
-          <button className="side-nav-ghost" type="button" title="Bảng điều khiển">
-            <LayoutGrid size={18} />
+          <button
+            className="side-nav-ghost"
+            type="button"
+            title="Bảng điều khiển"
+          >
+            <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
           </button>
 
-          <button className="side-nav-ghost" type="button" title="Cài đặt">
-            <Settings size={18} />
+          <button
+            className="side-nav-ghost"
+            type="button"
+            title="Cài đặt"
+            onClick={() => navigate("/settings")}
+          >
+            <Settings size={UI.SIDEBAR_ICON_SIZE} />
           </button>
         </div>
       </aside>
@@ -256,7 +406,7 @@ export default function AllDevicesPage() {
 
           <div className="top-bar-right">
             <div className="search-box">
-              <Search size={18} />
+              <Search size={UI.TOPBAR_ICON_SIZE} />
               <input
                 type="text"
                 placeholder="Search any devices here"
@@ -266,9 +416,9 @@ export default function AllDevicesPage() {
             </div>
 
             <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-            
+
             <button className="bell-btn" type="button">
-              <Bell size={18} />
+              <Bell size={UI.TOPBAR_ICON_SIZE} />
             </button>
           </div>
         </header>
@@ -287,7 +437,7 @@ export default function AllDevicesPage() {
                 <span>{activeDevices} đang hoạt động</span>
               </div>
               <div className="summary-icon">
-                <Settings size={18} />
+                <Settings size={UI.TOPBAR_ICON_SIZE} />
               </div>
             </div>
 
@@ -298,7 +448,7 @@ export default function AllDevicesPage() {
                 <span>kW (kilowatts)</span>
               </div>
               <div className="summary-icon soft">
-                <Zap size={18} />
+                <Zap size={UI.TOPBAR_ICON_SIZE} />
               </div>
             </div>
 
@@ -309,7 +459,7 @@ export default function AllDevicesPage() {
                 <span>/ 5 phòng</span>
               </div>
               <div className="summary-icon soft">
-                <Home size={18} />
+                <Home size={UI.TOPBAR_ICON_SIZE} />
               </div>
             </div>
           </section>
@@ -340,7 +490,10 @@ export default function AllDevicesPage() {
                   onClick={() => setShowStatusMenu((prev) => !prev)}
                 >
                   <span>{selectedStatus}</span>
-                  <ChevronDown size={18} className="status-dropdown-arrow" />
+                  <ChevronDown
+                    size={UI.TOPBAR_ICON_SIZE}
+                    className="status-dropdown-arrow"
+                  />
                 </button>
 
                 {showStatusMenu && (
@@ -351,7 +504,9 @@ export default function AllDevicesPage() {
                         type="button"
                         className={`status-dropdown-item ${
                           selectedStatus === option ? "active" : ""
-                        } ${index < statusOptions.length - 1 ? "with-border" : ""}`}
+                        } ${
+                          index < statusOptions.length - 1 ? "with-border" : ""
+                        }`}
                         onClick={() => {
                           setSelectedStatus(option);
                           setShowStatusMenu(false);

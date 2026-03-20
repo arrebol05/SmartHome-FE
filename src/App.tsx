@@ -3,6 +3,8 @@ import LoginPage from "./pages/LoginPage";
 import AllDevicesPage from "./pages/AllDevicesPage";
 import TimerPage from "./pages/TimerPage";
 import HomePage from "./pages/HomePage";
+import SettingsPage from "./pages/SettingsPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -11,6 +13,7 @@ function App() {
         <Route path="/devices" element={<AllDevicesPage />} />
         <Route path="/timers" element={<TimerPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </BrowserRouter>
   );
