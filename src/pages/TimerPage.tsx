@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/context/ThemeContext";
 import {
   Home,
   Zap,
@@ -7,7 +9,6 @@ import {
   Settings,
   Bell,
   Search,
-  SunMedium,
   Plus,
   CalendarDays,
   Trash2,
@@ -121,6 +122,7 @@ export default function TimerPage() {
   const totalCount = timers.length;
   const activeCount = timers.filter((item) => item.enabled).length;
   const inactiveCount = timers.filter((item) => !item.enabled).length;
+  const { themeMode, toggleTheme } = useTheme();
 
   const timerStats = [
     {
@@ -173,7 +175,7 @@ export default function TimerPage() {
   };
 
   return (
-    <div className="timer-page">
+    <div className={`timer-page ${themeMode === "dark" ? "dark-mode" : ""}`}>
       <aside className="timer-sidebar">
         <button
           className="timer-nav-btn"
@@ -224,12 +226,8 @@ export default function TimerPage() {
               <Search size={18} />
               <input type="text" placeholder="Search any devices here" />
             </div>
-
-            <button className="timer-theme-btn" type="button">
-              <SunMedium size={16} />
-              <span>Light</span>
-            </button>
-
+        
+            <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
             <button className="timer-bell-btn" type="button">
               <Bell size={18} />
             </button>

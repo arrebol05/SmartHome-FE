@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/context/ThemeContext";
 import {
   Home,
   Zap,
@@ -8,7 +10,6 @@ import {
   Settings,
   Bell,
   Search,
-  SunMedium,
   Star,
   Fan,
   Monitor,
@@ -55,7 +56,7 @@ const roomTabs = [
   "Sân vườn",
 ] as const;
 
-const statusOptions = ["Tất cả thiết bị", "Đang hoạt động", "Đã tắt"] as const;
+const statusOptions = ["Tất cả thiết bị", "Đang bật", "Đang tắt"] as const;
 
 type StatusFilter = (typeof statusOptions)[number];
 type RoomFilter = (typeof roomTabs)[number];
@@ -136,12 +137,29 @@ function renderDeviceIcon(type: Device["iconType"], active: boolean) {
 
 export default function AllDevicesPage() {
   const navigate = useNavigate();
+  const { themeMode, toggleTheme } = useTheme();
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const [devices, setDevices] = useState<Device[]>(initialDevices);
   const [selectedRoom, setSelectedRoom] = useState<RoomFilter>("Tất Cả Phòng");
   const [selectedStatus, setSelectedStatus] =
     useState<StatusFilter>("Tất cả thiết bị");
   const [searchTerm, setSearchTerm] = useState("");
+  const [showStatusMenu, setShowStatusMenu] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowStatusMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleToggleDevice = (id: number) => {
     setDevices((prev) =>
@@ -164,8 +182,8 @@ export default function AllDevicesPage() {
 
       const matchStatus =
         selectedStatus === "Tất cả thiết bị" ||
-        (selectedStatus === "Đang hoạt động" && device.active) ||
-        (selectedStatus === "Đã tắt" && !device.active);
+        (selectedStatus === "Đang bật" && device.active) ||
+        (selectedStatus === "Đang tắt" && !device.active);
 
       const keyword = searchTerm.trim().toLowerCase();
       const matchSearch =
@@ -184,7 +202,7 @@ export default function AllDevicesPage() {
   ).size;
 
   return (
-    <div className="all-devices-page">
+    <div className={`all-devices-page ${themeMode === "dark" ? "dark-mode" : ""}`}>
       <aside className="side-nav">
         <div className="side-nav-logo">
           <button
@@ -247,11 +265,8 @@ export default function AllDevicesPage() {
               />
             </div>
 
-            <button className="theme-btn" type="button">
-              <SunMedium size={16} />
-              <span>Light</span>
-            </button>
-
+            <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
+            
             <button className="bell-btn" type="button">
               <Bell size={18} />
             </button>
@@ -318,21 +333,35 @@ export default function AllDevicesPage() {
 
             <div className="filter-right">
               <h4>Trạng Thái</h4>
-              <div className="status-dropdown-wrap">
-                <select
-                  className="status-select"
-                  value={selectedStatus}
-                  onChange={(e) =>
-                    setSelectedStatus(e.target.value as StatusFilter)
-                  }
+              <div className="status-dropdown-wrap" ref={dropdownRef}>
+                <button
+                  className={`status-dropdown-btn ${showStatusMenu ? "open" : ""}`}
+                  type="button"
+                  onClick={() => setShowStatusMenu((prev) => !prev)}
                 >
-                  {statusOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown size={16} className="status-select-icon" />
+                  <span>{selectedStatus}</span>
+                  <ChevronDown size={18} className="status-dropdown-arrow" />
+                </button>
+
+                {showStatusMenu && (
+                  <div className="status-dropdown-menu">
+                    {statusOptions.map((option, index) => (
+                      <button
+                        key={option}
+                        type="button"
+                        className={`status-dropdown-item ${
+                          selectedStatus === option ? "active" : ""
+                        } ${index < statusOptions.length - 1 ? "with-border" : ""}`}
+                        onClick={() => {
+                          setSelectedStatus(option);
+                          setShowStatusMenu(false);
+                        }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </section>
