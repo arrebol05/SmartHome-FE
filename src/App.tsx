@@ -4,6 +4,10 @@ import AllDevicesPage from "./pages/AllDevicesPage";
 import TimerPage from "./pages/TimerPage";
 import HomePage from "./pages/HomePage";
 import SettingsPage from "./pages/SettingsPage";
+import NotificationsPage from "./pages/NotificationsPage";
+import ProfilePage from "./pages/ProfilePage";
+
+import "@/styles/global.css"; 
 
 function App() {
   return (
@@ -14,6 +18,8 @@ function App() {
         <Route path="/timers" element={<TimerPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Zap, LayoutGrid, Clock3, Settings } from "lucide-react";
+import { Home, Zap, Layers, Clock3, LayoutGrid, Settings } from "lucide-react";
 import { UI } from "@/constants/ui";
 import "./app-layout.css";
 
@@ -11,15 +11,16 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isHome = location.pathname === "/home";
-  const isDevices = location.pathname === "/devices";
-  const isTimers = location.pathname === "/timers";
-  const isSettings = location.pathname === "/settings";
+  const isHome          = location.pathname === "/home";
+  const isNotifications = location.pathname === "/notifications";
+  const isDevices       = location.pathname === "/devices";
+  const isTimers        = location.pathname === "/timers";
+  const isSettings      = location.pathname === "/settings";
 
   return (
     <aside className={`app-sidebar ${className}`}>
       <button
-        className={`app-nav-btn ${isHome ? "active" : ""}`}
+        className={`app-nav-btn ${isHome ? "active" : "ghost"}`}
         type="button"
         title="Trang chủ"
         onClick={() => navigate("/home")}
@@ -28,7 +29,12 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
       </button>
 
       <div className="app-sidebar-links">
-        <button className="app-nav-ghost" type="button" title="Điện năng">
+        <button
+          className={`app-nav-btn ${isNotifications ? "active" : "ghost"}`}
+          type="button"
+          title="Thông báo"
+          onClick={() => navigate("/notifications")}
+        >
           <Zap size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
@@ -38,7 +44,7 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
           title="Thiết bị"
           onClick={() => navigate("/devices")}
         >
-          <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
+          <Layers size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
         <button
@@ -50,7 +56,7 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
           <Clock3 size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
-        <button className="app-nav-ghost" type="button" title="Bảng điều khiển">
+        <button className="app-nav-btn ghost" type="button" title="Bảng điều khiển">
           <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 

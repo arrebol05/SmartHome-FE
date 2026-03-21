@@ -697,3 +697,23 @@
 .home-page.dark-mode .home-device-divider {
   background: #3a4354;
 }
+
+.account-menu.dark-mode,
+.account-menu.dark-mode .account-menu-item {
+  background: #2a3140;
+}
+
+.account-menu.dark-mode .account-menu-header h3,
+.account-menu.dark-mode .account-menu-text strong {
+  color: #f3f4f6;
+}
+
+.account-menu.dark-mode .account-menu-header p,
+.account-menu.dark-mode .account-menu-text span,
+.account-menu.dark-mode .account-menu-arrow {
+  color: #c7cfdb;
+}
+
+.account-menu.dark-mode .account-menu-item {
+  border-top-color: #3a4354;
+}

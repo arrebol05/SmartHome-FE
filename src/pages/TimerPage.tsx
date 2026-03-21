@@ -1,19 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
+import AppSidebar from "@/components/AppSidebar";
+import AccountMenu from "@/components/AccountMenu";
+import { UI } from "@/constants/ui";
 import {
-    Home,
-    Zap,
-    Clock3,
-    Settings,
-    Bell,
-    Search,
-    Plus,
-    CalendarDays,
-    Trash2,
-    CheckCircle,
-    LayoutGrid,
+    Home, Bell, Search, Plus, CalendarDays, Trash2, CheckCircle, Clock3,
 } from "lucide-react";
 import "./timer.css";
 
@@ -28,86 +20,32 @@ type TimerItem = {
 };
 
 const initialTimerList: TimerItem[] = [
-    {
-        id: 1,
-        time: "07:00",
-        device: "Smart LED",
-        room: "Living Room",
-        repeat: "Các ngày trong tuần",
-        mode: "BẬT",
-        enabled: true,
-    },
-    {
-        id: 2,
-        time: "23:00",
-        device: "Air Conditioner",
-        room: "Bedroom",
-        repeat: "Hàng ngày",
-        mode: "TẮT",
-        enabled: true,
-    },
-    {
-        id: 3,
-        time: "18:00",
-        device: "Smart Fan",
-        room: "Living Room",
-        repeat: "Cuối tuần",
-        mode: "BẬT",
-        enabled: false,
-    },
+    { id: 1, time: "07:00", device: "Smart LED", room: "Phòng khách", repeat: "Các ngày trong tuần", mode: "BẬT", enabled: true },
+    { id: 2, time: "23:00", device: "Air Conditioner", room: "Phòng ngủ", repeat: "Hàng ngày", mode: "TẮT", enabled: true },
+    { id: 3, time: "18:00", device: "Smart Fan", room: "Phòng khách", repeat: "Cuối tuần", mode: "BẬT", enabled: false },
 ];
 
-function TimerCard({
-    item,
-    onToggle,
-    onDelete,
-}: {
-    item: TimerItem;
-    onToggle: (id: number) => void;
-    onDelete: (id: number) => void;
-}) {
+function TimerCard({ item, onToggle, onDelete }: { item: TimerItem; onToggle: (id: number) => void; onDelete: (id: number) => void }) {
     return (
         <div className="timer-item-card">
             <div className="timer-item-left">
                 <div className="timer-time-box">{item.time}</div>
-
                 <div className="timer-item-content">
                     <div className="timer-item-title-row">
                         <h3>{item.device}</h3>
-                        <span className={`timer-badge ${item.mode === "BẬT" ? "on" : "off"}`}>
-                            {item.mode}
-                        </span>
+                        <span className={`timer-badge ${item.mode === "BẬT" ? "on" : "off"}`}>{item.mode}</span>
                     </div>
-
                     <div className="timer-item-meta">
-                        <span>
-                            <Home size={16} />
-                            {item.room}
-                        </span>
-                        <span>
-                            <CalendarDays size={16} />
-                            {item.repeat}
-                        </span>
+                        <span><Home size={16} />{item.room}</span>
+                        <span><CalendarDays size={16} />{item.repeat}</span>
                     </div>
                 </div>
             </div>
-
             <div className="timer-item-actions">
-                <button
-                    className={`toggle-switch ${item.enabled ? "on" : "off"}`}
-                    type="button"
-                    onClick={() => onToggle(item.id)}
-                    aria-label="Bật tắt lịch"
-                >
+                <button className={`toggle-switch ${item.enabled ? "on" : "off"}`} type="button" onClick={() => onToggle(item.id)}>
                     <span className="toggle-knob" />
                 </button>
-
-                <button
-                    className="delete-btn"
-                    type="button"
-                    onClick={() => onDelete(item.id)}
-                    aria-label="Xóa lịch"
-                >
+                <button className="delete-btn" type="button" onClick={() => onDelete(item.id)}>
                     <Trash2 size={18} />
                 </button>
             </div>
@@ -116,131 +54,62 @@ function TimerCard({
 }
 
 export default function TimerPage() {
-    const navigate = useNavigate();
-    const [timers, setTimers] = useState<TimerItem[]>(initialTimerList);
-
-    const totalCount = timers.length;
-    const activeCount = timers.filter((item) => item.enabled).length;
-    const inactiveCount = timers.filter((item) => !item.enabled).length;
     const { themeMode, toggleTheme } = useTheme();
 
+    const [timers, setTimers] = useState<TimerItem[]>(initialTimerList);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [showAccountMenu, setShowAccountMenu] = useState(false);
+
+    const totalCount = timers.length;
+    const activeCount = timers.filter((t) => t.enabled).length;
+    const inactiveCount = timers.filter((t) => !t.enabled).length;
+
     const timerStats = [
-        {
-            id: 1,
-            title: "Tổng số lịch",
-            value: String(totalCount),
-            icon: <Clock3 size={20} />,
-            theme: "blue",
-        },
-        {
-            id: 2,
-            title: "Đang hoạt động",
-            value: String(activeCount),
-            icon: <CheckCircle size={20} />,
-            theme: "green",
-        },
-        {
-            id: 3,
-            title: "Đã tắt",
-            value: String(inactiveCount),
-            icon: <Clock3 size={20} />,
-            theme: "gray",
-        },
+        { id: 1, title: "Tổng số lịch", value: String(totalCount), icon: <Clock3 size={20} />, theme: "blue" },
+        { id: 2, title: "Đang hoạt động", value: String(activeCount), icon: <CheckCircle size={20} />, theme: "green" },
+        { id: 3, title: "Đã tắt", value: String(inactiveCount), icon: <Clock3 size={20} />, theme: "gray" },
     ];
 
     const handleToggleTimer = (id: number) => {
-        setTimers((prev) =>
-            prev.map((item) =>
-                item.id === id ? { ...item, enabled: !item.enabled } : item
-            )
-        );
+        setTimers((prev) => prev.map((t) => t.id === id ? { ...t, enabled: !t.enabled } : t));
     };
 
     const handleDeleteTimer = (id: number) => {
-        setTimers((prev) => prev.filter((item) => item.id !== id));
+        setTimers((prev) => prev.filter((t) => t.id !== id));
     };
 
     const handleCreateTimer = () => {
-        const newTimer: TimerItem = {
-            id: Date.now(),
-            time: "20:30",
-            device: "New Device",
-            room: "Living Room",
-            repeat: "Hàng ngày",
-            mode: "BẬT",
-            enabled: true,
-        };
-
-        setTimers((prev) => [newTimer, ...prev]);
+        setTimers((prev) => [{
+            id: Date.now(), time: "20:30", device: "New Device",
+            room: "Phòng khách", repeat: "Hàng ngày", mode: "BẬT", enabled: true,
+        }, ...prev]);
     };
 
     return (
         <div className={`timer-page ${themeMode === "dark" ? "dark-mode" : ""}`}>
-            <aside className="timer-sidebar">
-                <button
-                    className="timer-nav-btn"
-                    type="button"
-                    onClick={() => navigate("/home")}
-                    title="Trang chủ"
-                >
-                    <Home size={18} />
-                </button>
-
-                <div className="timer-sidebar-links">
-                    <button className="timer-nav-ghost" type="button" title="Điện năng">
-                        <Zap size={18} />
-                    </button>
-
-                    <button
-                        className="timer-nav-ghost"
-                        type="button"
-                        title="Thiết bị"
-                        onClick={() => navigate("/devices")}
-                    >
-                        <LayoutGrid size={18} />
-                    </button>
-
-                    <button
-                        className="timer-nav-btn active"
-                        type="button"
-                        title="Lịch hẹn giờ"
-                        onClick={() => navigate("/timers")}
-                    >
-                        <Clock3 size={18} />
-                    </button>
-
-                    <button className="timer-nav-ghost" type="button" title="Bảng điều khiển">
-                        <LayoutGrid size={18} />
-                    </button>
-
-                    <button
-                        className="timer-nav-ghost"
-                        type="button"
-                        title="Cài đặt"
-                        onClick={() => navigate("/settings")}
-                    >
-                        <Settings size={18} />
-                    </button>
-                </div>
-            </aside>
+            <AppSidebar />
 
             <main className="timer-main">
                 <header className="timer-topbar">
                     <div className="timer-topbar-left">
-                        <div className="timer-avatar" />
-                        <h2>Welcome to Meomeo’s Home</h2>
+                        <button
+                            type="button"
+                            className="timer-avatar"
+                            onClick={() => setShowAccountMenu((p) => !p)}
+                        />
+                        <h2>Welcome to Meomeo's Home</h2>
+                        {showAccountMenu && (
+                            <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
+                        )}
                     </div>
 
                     <div className="timer-topbar-right">
-                        <div className="timer-search-box">
-                            <Search size={18} />
-                            <input type="text" placeholder="Search any devices here" />
+                        <div className="topbar-search-box">
+                            <Search size={UI.TOPBAR_ICON_SIZE} />
+                            <input type="text" placeholder="Search any devices here" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
-
                         <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-                        <button className="timer-bell-btn" type="button">
-                            <Bell size={18} />
-                        </button>
+                        <button className="timer-bell-btn" type="button"><Bell size={UI.TOPBAR_ICON_SIZE} /></button>
                     </div>
                 </header>
 
@@ -250,14 +119,8 @@ export default function TimerPage() {
                             <h1>Lịch Hẹn Giờ</h1>
                             <p>Quản lý và theo dõi lịch trình của bạn</p>
                         </div>
-
-                        <button
-                            className="create-timer-btn"
-                            type="button"
-                            onClick={handleCreateTimer}
-                        >
-                            <Plus size={18} />
-                            <span>Tạo Lịch Mới</span>
+                        <button className="create-timer-btn" type="button" onClick={handleCreateTimer}>
+                            <Plus size={18} /><span>Tạo Lịch Mới</span>
                         </button>
                     </div>
 
@@ -265,22 +128,14 @@ export default function TimerPage() {
                         {timerStats.map((stat) => (
                             <div className="timer-stat-card" key={stat.id}>
                                 <div className={`timer-stat-icon ${stat.theme}`}>{stat.icon}</div>
-                                <div className="timer-stat-text">
-                                    <p>{stat.title}</p>
-                                    <h3>{stat.value}</h3>
-                                </div>
+                                <div className="timer-stat-text"><p>{stat.title}</p><h3>{stat.value}</h3></div>
                             </div>
                         ))}
                     </div>
 
                     <div className="timer-list">
                         {timers.map((item) => (
-                            <TimerCard
-                                key={item.id}
-                                item={item}
-                                onToggle={handleToggleTimer}
-                                onDelete={handleDeleteTimer}
-                            />
+                            <TimerCard key={item.id} item={item} onToggle={handleToggleTimer} onDelete={handleDeleteTimer} />
                         ))}
                     </div>
                 </section>
