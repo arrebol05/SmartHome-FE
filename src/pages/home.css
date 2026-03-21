@@ -717,3 +717,275 @@
 .account-menu.dark-mode .account-menu-item {
   border-top-color: #3a4354;
 }
+
+
+/* ═══════════════════════════════════════
+   DEVICE CONTROL MODAL
+═══════════════════════════════════════ */
+.device-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 40, 60, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.device-modal {
+  background: #f4f8fb;
+  border-radius: 28px;
+  padding: 28px 28px 24px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  box-shadow: 0 24px 48px rgba(30, 45, 89, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Header */
+.device-modal-header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.device-modal-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2a3041;
+  margin-bottom: 4px;
+}
+
+.device-modal-header p {
+  font-size: 14px;
+  color: #8d95a4;
+}
+
+.device-modal-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: #e8edf2;
+  color: #5b6477;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.device-modal-close:hover { background: #d8dee8; }
+
+/* Ring */
+.device-modal-ring-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.device-modal-ring-value {
+  position: absolute;
+  font-size: 26px;
+  font-weight: 800;
+  color: #2a3041;
+}
+
+/* Mode label */
+.device-modal-mode-label {
+  text-align: center;
+}
+
+.device-modal-mode-label span {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a3acb9;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.device-modal-mode-label strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2a3041;
+}
+
+/* Level buttons */
+.device-modal-levels {
+  display: flex;
+  gap: 10px;
+}
+
+.device-modal-level-btn {
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid #dde3ec;
+  border-radius: 14px;
+  background: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  color: #4b5566;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.device-modal-level-btn.active {
+  background: linear-gradient(135deg, #9ed8e1, #5f9bf5);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 6px 14px rgba(95, 155, 245, 0.3);
+}
+
+.device-modal-level-btn:hover:not(.active) { background: #f0f4fa; }
+
+/* Mode buttons */
+.device-modal-modes {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.device-modal-mode-btn {
+  flex: 1;
+  height: 46px;
+  border: 1.5px solid #dde3ec;
+  border-radius: 14px;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4b5566;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.device-modal-mode-btn.active {
+  background: linear-gradient(135deg, #9ed8e1, #5f9bf5);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 6px 14px rgba(95, 155, 245, 0.28);
+}
+
+.device-modal-mode-btn:hover:not(.active) { background: #f0f4fa; }
+
+/* Save button */
+.device-modal-save {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6aaef8, #9ed8e1);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.device-modal-save:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(95, 155, 245, 0.3);
+}
+
+/* Dark mode — modal */
+.device-modal.dark-mode {
+  background: #2a3140;
+}
+
+.device-modal.dark-mode .device-modal-header h2,
+.device-modal.dark-mode .device-modal-ring-value,
+.device-modal.dark-mode .device-modal-mode-label strong {
+  color: #f3f4f6;
+}
+
+.device-modal.dark-mode .device-modal-header p,
+.device-modal.dark-mode .device-modal-mode-label span {
+  color: #c7cfdb;
+}
+
+.device-modal.dark-mode .device-modal-close {
+  background: #353d4d;
+  color: #c7cfdb;
+}
+
+.device-modal.dark-mode .device-modal-level-btn,
+.device-modal.dark-mode .device-modal-mode-btn {
+  background: #353d4d;
+  border-color: #485266;
+  color: #c7cfdb;
+}
+
+.device-modal.dark-mode .device-modal-level-btn.active,
+.device-modal.dark-mode .device-modal-mode-btn.active {
+  background: linear-gradient(135deg, #9ed8e1, #5f9bf5);
+  color: white;
+}
+
+/* Ring dark */
+.device-modal.dark-mode circle[stroke="#e8edf2"] {
+  stroke: #3a4354;
+}
+
+/* ═══════════════════════════════════════
+   ADD POPUP (Thêm phòng / Thêm thiết bị)
+═══════════════════════════════════════ */
+.add-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.add-popup {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 16px 32px rgba(30, 45, 89, 0.16);
+  overflow: hidden;
+  z-index: 101;
+  min-width: 160px;
+}
+
+.add-popup-item {
+  width: 100%;
+  border: none;
+  background: #ffffff;
+  padding: 14px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a3041;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s ease;
+  display: block;
+}
+
+.add-popup-item + .add-popup-item {
+  border-top: 1px solid #eef1f5;
+}
+
+.add-popup-item:hover { background: #f4f8fb; }
+
+/* Dark mode — add popup */
+.add-popup.dark-mode {
+  background: #2a3140;
+}
+
+.add-popup.dark-mode .add-popup-item {
+  background: #2a3140;
+  color: #f3f4f6;
+}
+
+.add-popup.dark-mode .add-popup-item + .add-popup-item {
+  border-top-color: #3a4354;
+}
+
+.add-popup.dark-mode .add-popup-item:hover { background: #353d4d; }

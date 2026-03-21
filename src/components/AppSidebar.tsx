@@ -15,6 +15,7 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
   const isNotifications = location.pathname === "/notifications";
   const isDevices       = location.pathname === "/devices";
   const isTimers        = location.pathname === "/timers";
+  const isDashboard     = location.pathname === "/dashboard";
   const isSettings      = location.pathname === "/settings";
 
   return (
@@ -56,7 +57,12 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
           <Clock3 size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
-        <button className="app-nav-btn ghost" type="button" title="Bảng điều khiển">
+        <button
+          className={`app-nav-btn ${isDashboard ? "active" : "ghost"}`}
+          type="button"
+          title="Bảng điều khiển"
+          onClick={() => navigate("/dashboard")}
+        >
           <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
