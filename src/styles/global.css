@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 /* Fonts, colors, radius, shadow, transitions, hover */
 :root {
   --font-base: 14px;
@@ -45,7 +47,7 @@
 
 /* Body */
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: var(--font-base);
   color: var(--color-text);
   margin: 0;
@@ -74,23 +76,33 @@ body {
 }
 
 /* Buttons */
-button, .btn-primary, .btn-secondary {
+button,
+.btn-primary,
+.btn-secondary {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
-button:hover, .btn-primary:hover, .btn-secondary:hover {
+
+button:hover,
+.btn-primary:hover,
+.btn-secondary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
 /* Toggle */
-.device-switch, .toggle-switch, .home-device-switch {
+.device-switch,
+.toggle-switch,
+.home-device-switch {
   border-radius: var(--radius-pill);
   position: relative;
   transition: all var(--transition-fast);
 }
-.device-switch-knob, .toggle-knob, .home-device-switch-knob {
+
+.device-switch-knob,
+.toggle-knob,
+.home-device-switch-knob {
   border-radius: var(--radius-pill);
   transition: all var(--transition-fast);
 }
@@ -171,7 +183,8 @@ button:hover, .btn-primary:hover, .btn-secondary:hover {
 
 /* Search box chung cho tất cả pages */
 .topbar-search-box {
-  width: 430px;          /* giống HomePage chuẩn Figma */
+  width: 430px;
+  /* giống HomePage chuẩn Figma */
   height: 44px;
   border: 1px solid #cfd9e4;
   border-radius: 22px;

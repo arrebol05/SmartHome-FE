@@ -5,6 +5,7 @@
   justify-content: center;
   padding: 24px;
   background: linear-gradient(90deg, #addae3 0%, #6faaf5 48%, #313553 100%);
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .smart-login-card {
@@ -22,7 +23,7 @@
 }
 
 .smart-login-header h1 {
-  font-size: 31px;
+  font-size: 28px;
   line-height: 1.15;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -42,7 +43,7 @@
 .smart-field label {
   display: block;
   margin-bottom: 12px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #2d3042;
 }
@@ -58,7 +59,8 @@
   border-radius: 14px;
   background: transparent;
   padding: 0 42px 0 40px;
-  font-size: 15px;
+  font-size: 14px;
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: #2d3042;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -141,8 +143,9 @@
   border-radius: 14px;
   background: linear-gradient(90deg, #5f9bf5 0%, #9fd8e1 100%);
   color: white;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
+  font-family: "Plus Jakarta Sans", sans-serif;
   cursor: pointer;
   transition: all 0.25s ease;
 }
