@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
 import AllDevicesPage from "./pages/AllDevicesPage";
 import TimerPage from "./pages/TimerPage";
 import HomePage from "./pages/HomePage";
@@ -16,7 +15,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
         <Route path="/devices" element={<AllDevicesPage />} />
         <Route path="/timers" element={<TimerPage />} />
         <Route path="/home" element={<HomePage />} />

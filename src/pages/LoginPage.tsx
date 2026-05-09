@@ -120,10 +120,6 @@ export default function LoginPage() {
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập"}
           </button>
-
-          <p className="smart-login-register">
-            Chưa có tài khoản? <a href="/signup">Đăng ký ngay</a>
-          </p>
         </form>
       </div>
     </div>

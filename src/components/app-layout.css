@@ -120,6 +120,14 @@
   background: transparent;
   color: #30384a;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.app-bell-btn:hover {
+  transform: scale(1.08);
 }
 
 @media (max-width: 860px) {

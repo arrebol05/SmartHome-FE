@@ -25,10 +25,10 @@ type SmartDevice = {
 };
 
 const initialDevices: SmartDevice[] = [
-  { id: 1, name: "Smart LED",       room: "Phòng khách", subtitle: "ON",        statusText: "Active",   active: true,  iconType: "blank",   level: 3, mode: "AUTO", percent: 65 },
-  { id: 2, name: "Smart Fan",       room: "Phòng khách", subtitle: "Level 3",   statusText: "Active",   active: true,  iconType: "fan",     level: 3, mode: "AUTO", percent: 65 },
-  { id: 3, name: "Air Conditioner", room: "Phòng khách", subtitle: "24°C",      statusText: "Inactive", active: false, iconType: "blank",   level: 1, mode: "OFF",  percent: 0  },
-  { id: 4, name: "TV",              room: "Phòng khách", subtitle: "Channel 5", statusText: "Active",   active: true,  iconType: "monitor", level: 2, mode: "AUTO", percent: 40 },
+  { id: 1, name: "Smart LED", room: "Phòng khách", subtitle: "ON", statusText: "Active", active: true, iconType: "blank", level: 3, mode: "AUTO", percent: 65 },
+  { id: 2, name: "Smart Fan", room: "Phòng khách", subtitle: "Level 3", statusText: "Active", active: true, iconType: "fan", level: 3, mode: "AUTO", percent: 65 },
+  { id: 3, name: "Air Conditioner", room: "Phòng khách", subtitle: "24°C", statusText: "Inactive", active: false, iconType: "blank", level: 1, mode: "OFF", percent: 0 },
+  { id: 4, name: "TV", room: "Phòng khách", subtitle: "Channel 5", statusText: "Active", active: true, iconType: "monitor", level: 2, mode: "AUTO", percent: 40 },
 ];
 
 const initialRooms = ["Phòng khách", "Phòng ngủ", "Phòng bếp", "Phòng tắm", "Sân vườn"];
@@ -36,18 +36,18 @@ const initialRooms = ["Phòng khách", "Phòng ngủ", "Phòng bếp", "Phòng t
 /* ── RING SVG ── */
 function Ring({ percent, size = 160 }: { percent: number; size?: number }) {
   const stroke = 14;
-  const r      = (size - stroke) / 2;
-  const circ   = 2 * Math.PI * r;
-  const fill   = (percent / 100) * circ;
+  const r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const fill = (percent / 100) * circ;
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#e8edf2" strokeWidth={stroke} />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#e8edf2" strokeWidth={stroke} />
       <circle
-        cx={size/2} cy={size/2} r={r} fill="none"
+        cx={size / 2} cy={size / 2} r={r} fill="none"
         stroke="url(#ringGrad)" strokeWidth={stroke}
         strokeDasharray={`${fill} ${circ - fill}`}
         strokeLinecap="round"
-        transform={`rotate(-90 ${size/2} ${size/2})`}
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
       />
       <defs>
         <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
@@ -68,24 +68,40 @@ function DeviceModal({
   onUpdate: (id: number, changes: Partial<SmartDevice>) => void;
   themeMode: "light" | "dark";
 }) {
-  const [level,   setLevel]   = useState(device.level);
-  const [mode,    setMode]    = useState(device.mode);
+  const [level, setLevel] = useState(device.level);
+  const [mode, setMode] = useState(device.mode);
   const [percent, setPercent] = useState(device.percent);
 
   const handleLevel = (l: number) => {
+    const newPercent = Math.round((l / 5) * 100);
+    const newMode = mode === "OFF" ? "AUTO" : mode;
     setLevel(l);
-    setPercent(Math.round((l / 5) * 100));
+    setPercent(newPercent);
     if (mode === "OFF") setMode("AUTO");
+    onUpdate(device.id, { level: l, mode: newMode, percent: newPercent, subtitle: `Level ${l}`, active: true, statusText: "Active" });
   };
 
   const handleMode = (m: "OFF" | "AUTO" | "SWING") => {
+    let newLevel = level;
+    let newPercent = percent;
+    let newActive = true;
+    if (m === "OFF") {
+      newPercent = 0;
+      newLevel = 0;
+      newActive = false;
+    } else {
+      newLevel = device.level || 3;
+      newPercent = device.percent || 65;
+      newActive = true;
+    }
     setMode(m);
-    if (m === "OFF") { setPercent(0); setLevel(0); }
-    else { setLevel(device.level || 3); setPercent(device.percent || 65); }
+    setLevel(newLevel);
+    setPercent(newPercent);
+    const statusText = m === "OFF" ? "Inactive" : "Active";
+    onUpdate(device.id, { level: newLevel, mode: m, percent: newPercent, subtitle: m === "OFF" ? "OFF" : `Level ${newLevel}`, active: newActive, statusText });
   };
 
   const handleSave = () => {
-    onUpdate(device.id, { level, mode, percent, subtitle: mode === "OFF" ? "OFF" : `Level ${level}` });
     onClose();
   };
 
@@ -184,21 +200,21 @@ function DeviceCard({
 }) {
   return (
     <div className="home-device-card" style={{ cursor: "pointer" }} onClick={() => onOpen(device)}>
-      <div className="home-device-top">
-        <div className={`home-device-icon-box ${device.active ? "active" : "off"}`}>
-          {renderDeviceIcon(device.iconType, device.active)}
-        </div>
-        <button
-          type="button"
-          className={`home-device-switch ${device.active ? "on" : "off"}`}
-          onClick={(e) => { e.stopPropagation(); onToggle(device.id); }}
-        >
-          <span className="home-device-switch-knob" />
-        </button>
-      </div>
       <div className="home-device-main">
-        <h3>{device.name}</h3>
-        <p>{device.subtitle}</p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px" }}>
+          <div>
+            <h3>{device.name}</h3>
+            <p>{device.subtitle}</p>
+          </div>
+          <button
+            type="button"
+            className={`home-device-switch ${device.active ? "on" : "off"}`}
+            onClick={(e) => { e.stopPropagation(); onToggle(device.id); }}
+            style={{ flexShrink: 0 }}
+          >
+            <span className="home-device-switch-knob" />
+          </button>
+        </div>
       </div>
       <div className="home-device-divider" />
       <div className="home-device-status">
@@ -215,10 +231,10 @@ function renderDeviceIcon(type: SmartDevice["iconType"], active: boolean) {
   const cls = "home-device-svg";
   if (!active && type === "blank") return <div className="home-device-placeholder" />;
   switch (type) {
-    case "star":    return <Star    className={cls} size={UI.DEVICE_ICON_SIZE} />;
-    case "fan":     return <Fan     className={cls} size={UI.DEVICE_ICON_SIZE} />;
+    case "star": return <Star className={cls} size={UI.DEVICE_ICON_SIZE} />;
+    case "fan": return <Fan className={cls} size={UI.DEVICE_ICON_SIZE} />;
     case "monitor": return <Monitor className={cls} size={UI.DEVICE_ICON_SIZE} />;
-    default:        return <div className="home-device-placeholder" />;
+    default: return <div className="home-device-placeholder" />;
   }
 }
 
@@ -227,13 +243,13 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { themeMode, toggleTheme } = useTheme();
 
-  const [devices,         setDevices]         = useState(initialDevices);
-  const [rooms,           setRooms]           = useState(initialRooms);
-  const [selectedRoom,    setSelectedRoom]    = useState("Phòng khách");
+  const [devices, setDevices] = useState(initialDevices);
+  const [rooms, setRooms] = useState(initialRooms);
+  const [selectedRoom, setSelectedRoom] = useState("Phòng khách");
   const [showAccountMenu, setShowAccountMenu] = useState(false);
-  const [searchTerm,      setSearchTerm]      = useState("");
-  const [selectedDevice,  setSelectedDevice]  = useState<SmartDevice | null>(null);
-  const [showAddPopup,    setShowAddPopup]    = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDevice, setSelectedDevice] = useState<SmartDevice | null>(null);
+  const [showAddPopup, setShowAddPopup] = useState(false);
 
   const handleToggleDevice = (id: number) => {
     setDevices((prev) => prev.map((d) =>
@@ -313,26 +329,35 @@ export default function HomePage() {
         </header>
 
         <section className="home-content">
-          <section className="home-summary-grid">
-            <div className="home-circle-card">
-              <div className="home-card-head"><h4>Độ ẩm</h4><Droplets size={UI.TOPBAR_ICON_SIZE} /></div>
-              <div className="home-ring-wrap"><div className="home-ring"><div className="home-ring-value">65,0%</div></div></div>
-            </div>
-            <div className="home-circle-card">
-              <div className="home-card-head"><h4>Nhiệt độ</h4><Thermometer size={18} /></div>
-              <div className="home-ring-wrap"><div className="home-ring"><div className="home-ring-value">24°C</div></div></div>
-            </div>
-            <div className="home-energy-card">
-              <h3>Tổng tiêu thụ</h3>
-              <div className="home-energy-row"><span>Tháng 3</span><strong>245 kWh</strong></div>
-              <div className="home-energy-bar"><div className="home-energy-bar-fill" /></div>
-              <div className="home-energy-divider" />
-              <div className="home-energy-stats">
-                <div><span>Phòng khách</span><strong>98 kWh</strong></div>
-                <div><span>Phòng ngủ</span><strong>76 kWh</strong></div>
-                <div><span>Phòng bếp</span><strong>71 kWh</strong></div>
+          <section className="home-summary-section">
+            <h1>Tổng quan</h1>
+            <section className="home-summary-grid">
+              <div className="home-circle-card">
+                <div className="home-card-head"><h4>Độ ẩm</h4><Droplets size={UI.TOPBAR_ICON_SIZE} /></div>
+                <div className="home-ring-wrap">
+                  <Ring percent={65} size={140} />
+                  <div className="home-ring-value">65,0%</div>
+                </div>
               </div>
-            </div>
+              <div className="home-circle-card">
+                <div className="home-card-head"><h4>Nhiệt độ</h4><Thermometer size={18} /></div>
+                <div className="home-ring-wrap">
+                  <Ring percent={80} size={140} />
+                  <div className="home-ring-value">24°C</div>
+                </div>
+              </div>
+              <div className="home-energy-card">
+                <h3>Tổng tiêu thụ</h3>
+                <div className="home-energy-row"><span>Tháng 3</span><strong>245 kWh</strong></div>
+                <div className="home-energy-bar"><div className="home-energy-bar-fill" /></div>
+                <div className="home-energy-divider" />
+                <div className="home-energy-stats">
+                  <div><span>Phòng khách</span><strong>98 kWh</strong></div>
+                  <div><span>Phòng ngủ</span><strong>76 kWh</strong></div>
+                  <div><span>Phòng bếp</span><strong>71 kWh</strong></div>
+                </div>
+              </div>
+            </section>
           </section>
 
           <section className="home-device-section">
