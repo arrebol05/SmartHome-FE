@@ -4,6 +4,7 @@ import { useTheme } from "@/context/ThemeContext";
 import AppSidebar from "@/components/AppSidebar";
 import AccountMenu from "@/components/AccountMenu";
 import { UI } from "@/constants/ui";
+import AppTopbar from "@/components/AppTopbar";
 import {
     Home, Bell, Search, Plus, CalendarDays, Trash2, CheckCircle, Clock3,
 } from "lucide-react";
@@ -90,28 +91,15 @@ export default function TimerPage() {
             <AppSidebar />
 
             <main className="timer-main">
-                <header className="timer-topbar">
-                    <div className="timer-topbar-left">
-                        <button
-                            type="button"
-                            className="timer-avatar"
-                            onClick={() => setShowAccountMenu((p) => !p)}
-                        />
-                        <h2>Welcome to Meomeo's Home</h2>
-                        {showAccountMenu && (
-                            <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
-                        )}
-                    </div>
-
-                    <div className="timer-topbar-right">
-                        <div className="topbar-search-box">
-                            <Search size={UI.TOPBAR_ICON_SIZE} />
-                            <input type="text" placeholder="Search any devices here" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                        </div>
-                        <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-                        <button className="timer-bell-btn" type="button"><Bell size={UI.TOPBAR_ICON_SIZE} /></button>
-                    </div>
-                </header>
+                <AppTopbar
+                    showAccountMenu={showAccountMenu}
+                    setShowAccountMenu={setShowAccountMenu}
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    themeMode={themeMode}
+                    toggleTheme={toggleTheme}
+                    title="Welcome to Meomeo's Home"
+                />
 
                 <section className="timer-content">
                     <div className="timer-header-row">

@@ -562,7 +562,7 @@
   height: 18px;
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1280px) {
   .home-summary-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -571,14 +571,12 @@
     grid-column: 1 / -1;
   }
 
+  .home-circle-card {
+    padding: 16px 20px 36px;
+  }
+
   .home-device-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  .home-device-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -596,10 +594,6 @@
 
   .home-search-box {
     width: 100%;
-  }
-
-  .home-summary-grid {
-    grid-template-columns: 1fr;
   }
 
   .home-energy-card {

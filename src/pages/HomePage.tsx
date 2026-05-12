@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useNavigate } from "react-router-dom";
-import ThemeToggle from "@/components/ThemeToggle";
-import AccountMenu from "@/components/AccountMenu";
+import AppTopbar from "@/components/AppTopbar";
 import { UI } from "@/constants/ui";
 import {
   Home, Zap, LayoutGrid, Clock3, Settings, Layers,
-  Bell, Search, Droplets, Thermometer, Star, Fan, Monitor,
+  Droplets, Thermometer, Star, Fan, Monitor,
   Plus, X,
 } from "lucide-react";
 import "./home.css";
@@ -312,21 +311,15 @@ export default function HomePage() {
       </aside>
 
       <main className="home-main">
-        <header className="home-topbar">
-          <div className="home-topbar-left">
-            <button type="button" className="home-avatar" onClick={() => setShowAccountMenu((p) => !p)} />
-            <h2>Welcome to Meomeo's Home</h2>
-            {showAccountMenu && <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />}
-          </div>
-          <div className="home-topbar-right">
-            <div className="topbar-search-box">
-              <Search size={UI.TOPBAR_ICON_SIZE} />
-              <input type="text" placeholder="Search any devices here" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            </div>
-            <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-            <button className="home-bell-btn" type="button"><Bell size={UI.TOPBAR_ICON_SIZE} /></button>
-          </div>
-        </header>
+        <AppTopbar
+          showAccountMenu={showAccountMenu}
+          setShowAccountMenu={setShowAccountMenu}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          themeMode={themeMode}
+          toggleTheme={toggleTheme}
+          title="Welcome to Meomeo's Home"
+        />
 
         <section className="home-content">
           <section className="home-summary-section">
@@ -335,14 +328,14 @@ export default function HomePage() {
               <div className="home-circle-card">
                 <div className="home-card-head"><h4>Độ ẩm</h4><Droplets size={UI.TOPBAR_ICON_SIZE} /></div>
                 <div className="home-ring-wrap">
-                  <Ring percent={65} size={140} />
+                  <Ring percent={65} size={120} />
                   <div className="home-ring-value">65,0%</div>
                 </div>
               </div>
               <div className="home-circle-card">
                 <div className="home-card-head"><h4>Nhiệt độ</h4><Thermometer size={18} /></div>
                 <div className="home-ring-wrap">
-                  <Ring percent={80} size={140} />
+                  <Ring percent={80} size={120} />
                   <div className="home-ring-value">24°C</div>
                 </div>
               </div>

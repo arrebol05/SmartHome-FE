@@ -1,68 +1,55 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Zap, LayoutGrid, Clock3, Settings } from "lucide-react";
+import { ReactNode } from "react";
+import { Search } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+import AccountMenu from "./AccountMenu";
 import { UI } from "@/constants/ui";
 import "./app-layout.css";
 
-type AppSidebarProps = {
-  className?: string;
+type AppTopbarProps = {
+  showAccountMenu: boolean;
+  setShowAccountMenu: (show: boolean) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  themeMode: "light" | "dark";
+  toggleTheme: () => void;
+  title: string;
 };
 
-export default function AppSidebar({ className = "" }: AppSidebarProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const isHome = location.pathname === "/home";
-  const isDevices = location.pathname === "/devices";
-  const isTimers = location.pathname === "/timers";
-  const isSettings = location.pathname === "/settings";
-
+export default function AppTopbar({
+  showAccountMenu,
+  setShowAccountMenu,
+  searchTerm,
+  setSearchTerm,
+  themeMode,
+  toggleTheme,
+  title,
+}: AppTopbarProps) {
   return (
-    <aside className={`app-sidebar ${className}`}>
-      <button
-        className={`app-nav-btn ${isHome ? "active" : ""}`}
-        type="button"
-        title="Trang chủ"
-        onClick={() => navigate("/home")}
-      >
-        <Home size={UI.SIDEBAR_ICON_SIZE} />
-      </button>
-
-      <div className="app-sidebar-links">
-        <button className="app-nav-ghost" type="button" title="Điện năng">
-          <Zap size={UI.SIDEBAR_ICON_SIZE} />
-        </button>
-
-        <button
-          className={`app-nav-btn ${isDevices ? "active" : "ghost"}`}
-          type="button"
-          title="Thiết bị"
-          onClick={() => navigate("/devices")}
-        >
-          <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
-        </button>
-
-        <button
-          className={`app-nav-btn ${isTimers ? "active" : "ghost"}`}
-          type="button"
-          title="Lịch hẹn giờ"
-          onClick={() => navigate("/timers")}
-        >
-          <Clock3 size={UI.SIDEBAR_ICON_SIZE} />
-        </button>
-
-        <button className="app-nav-ghost" type="button" title="Bảng điều khiển">
-          <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
-        </button>
-
-        <button
-          className={`app-nav-btn ${isSettings ? "active blue" : "ghost"}`}
-          type="button"
-          title="Cài đặt"
-          onClick={() => navigate("/settings")}
-        >
-          <Settings size={UI.SIDEBAR_ICON_SIZE} />
-        </button>
+    <header className="app-topbar">
+      <div className="app-topbar-left">
+        <h2>{title}</h2>
+        {showAccountMenu && (
+          <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
+        )}
       </div>
-    </aside>
+
+      <div className="app-topbar-right">
+        <div className="topbar-search-box">
+          <Search size={UI.TOPBAR_ICON_SIZE} />
+          <input
+            type="text"
+            placeholder="Search any devices here"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
+        <button
+          type="button"
+          className="app-avatar"
+          onClick={() => setShowAccountMenu(!showAccountMenu)}
+        />
+      </div>
+    </header>
   );
 }

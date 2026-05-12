@@ -69,20 +69,12 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  flex: 1;
 }
 
 .app-topbar-left h2 {
   font-size: 17px;
   font-weight: 700;
-}
-
-.app-avatar {
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #e9c67b, #6bb5f3);
 }
 
 .app-topbar-right {
@@ -91,43 +83,52 @@
   gap: 14px;
 }
 
-.app-search-box {
-  width: 430px;
-  height: 44px;
-  border: 1px solid #cfd9e4;
-  border-radius: 22px;
-  background: #ffffff;
+.topbar-search-box {
+  width: 360px;
+  height: 40px;
+  border: 1px solid #e0e6ed;
+  border-radius: 20px;
+  background: #f5f7fb;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 16px;
-  color: #8d95a4;
+  gap: 8px;
+  padding: 0 14px;
+  color: #95a0ae;
+  transition: all 0.2s ease;
 }
 
-.app-search-box input {
+.topbar-search-box:focus-within {
+  border-color: #5f9bf5;
+  background: #ffffff;
+}
+
+.topbar-search-box input {
   width: 100%;
   border: none;
   outline: none;
   background: transparent;
-  font-size: 14px;
+  font-size: 13px;
   color: #475066;
 }
 
-.app-bell-btn {
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: transparent;
-  color: #30384a;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+.topbar-search-box input::placeholder {
+  color: #b5bcc6;
 }
 
-.app-bell-btn:hover {
-  transform: scale(1.08);
+.app-avatar {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #e9c67b, #6bb5f3);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.app-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(95, 155, 245, 0.2);
 }
 
 @media (max-width: 860px) {
@@ -138,24 +139,32 @@
     align-items: stretch;
   }
 
+  .app-topbar-left {
+    flex: auto;
+  }
+
   .app-topbar-right {
     flex-wrap: wrap;
   }
 
-  .app-search-box {
+  .topbar-search-box {
     width: 100%;
   }
 }
 
 @media (max-width: 700px) {
-  .app-sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
+  .app-topbar {
     padding: 14px;
   }
 
-  .app-sidebar-links {
-    flex-direction: row;
+  .topbar-search-box {
+    width: 100%;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .app-avatar {
+    width: 36px;
+    height: 36px;
   }
 }
