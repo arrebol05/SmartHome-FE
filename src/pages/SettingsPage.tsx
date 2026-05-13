@@ -460,7 +460,7 @@ export default function SettingsPage() {
           setSearchTerm={setSearchTerm}
           themeMode={themeMode}
           toggleTheme={toggleTheme}
-          title="Welcome to Meomeo's Home"
+          title="Welcome to Orange's Home"
         />
 
         <section className="settings-content">

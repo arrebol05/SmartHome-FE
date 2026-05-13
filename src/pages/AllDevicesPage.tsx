@@ -189,7 +189,7 @@ export default function AllDevicesPage() {
           setSearchTerm={setSearchTerm}
           themeMode={themeMode}
           toggleTheme={toggleTheme}
-          title="Welcome to Meomeo's Home"
+          title="Welcome to Orange's Home"
         />
 
         <section className="content-wrap">

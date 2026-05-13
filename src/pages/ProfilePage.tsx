@@ -66,7 +66,7 @@ export default function ProfilePage() {
           setSearchTerm={setSearchTerm}
           themeMode={themeMode}
           toggleTheme={toggleTheme}
-          title="Welcome to Meomeo's Home"
+          title="Welcome to Orange's Home"
         />
 
         {/* Content */}
