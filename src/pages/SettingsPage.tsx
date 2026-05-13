@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import AppSidebar from "@/components/AppSidebar";
-import AccountMenu from "@/components/AccountMenu";
-import { UI } from "@/constants/ui";
+import AppTopbar from "@/components/AppTopbar";
 import {
-  Bell, Search, Thermometer, Sun, AlertTriangle, RotateCcw, Save, Wifi, WifiOff,
+  Thermometer, Sun, AlertTriangle, RotateCcw, Save, Wifi, WifiOff,
 } from "lucide-react";
 import {
   automationService, dashboardService, deviceService, toErrorMessage,
@@ -455,34 +453,15 @@ export default function SettingsPage() {
       <AppSidebar />
 
       <main className="settings-main">
-        <header className="settings-topbar">
-          <div className="settings-topbar-left">
-            <button
-              type="button"
-              className="settings-avatar"
-              style={{ border: "none", cursor: "pointer" }}
-              onClick={() => setShowAccountMenu((p) => !p)}
-            />
-            <h2>Welcome to Meomeo's Home</h2>
-            {showAccountMenu && (
-              <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
-            )}
-          </div>
-
-          <div className="settings-topbar-right">
-            <div className="topbar-search-box">
-              <Search size={UI.TOPBAR_ICON_SIZE} />
-              <input
-                type="text"
-                placeholder="Search any devices here"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-            <button className="settings-bell-btn" type="button"><Bell size={UI.TOPBAR_ICON_SIZE} /></button>
-          </div>
-        </header>
+        <AppTopbar
+          showAccountMenu={showAccountMenu}
+          setShowAccountMenu={setShowAccountMenu}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          themeMode={themeMode}
+          toggleTheme={toggleTheme}
+          title="Welcome to Meomeo's Home"
+        />
 
         <section className="settings-content">
           <div className="settings-header">

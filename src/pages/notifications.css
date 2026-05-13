@@ -73,7 +73,7 @@
 }
 
 .notifications-header-row h1 {
-  font-size: 34px;
+  font-size: 24px;
   font-weight: 800;
   color: #293042;
   line-height: 1.1;
@@ -86,26 +86,26 @@
 }
 
 .mark-all-btn {
-  height: 44px;
-  padding: 0 18px;
-  border: 1px solid #cfd9e4;
-  border-radius: 12px;
-  background: #ffffff;
+  background: transparent;
+  border: 1.5px solid #6faaf5;
+  color: #6faaf5;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #40485c;
-  cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: all 0.2s ease;
 }
 
 .mark-all-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  background: #6faaf5;
+  color: #fff;
 }
 
 .notification-tabs {
@@ -130,7 +130,7 @@
 .notification-tab.active {
   background: linear-gradient(135deg, #6aaef8 0%, #9ed8e1 100%);
   color: #ffffff;
-  box-shadow: 0 6px 14px rgba(95,155,245,0.25);
+  box-shadow: 0 6px 14px rgba(95, 155, 245, 0.25);
 }
 
 .notifications-list {
@@ -154,19 +154,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  box-shadow: 0 4px 14px rgba(42,58,89,0.07);
+  box-shadow: 0 4px 14px rgba(42, 58, 89, 0.07);
   border: 1.5px solid transparent;
   transition: all 0.2s ease;
 }
 
 .notification-card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(42,58,89,0.11);
+  box-shadow: 0 8px 20px rgba(42, 58, 89, 0.11);
 }
 
 .notification-card.unread {
-  border-color: #b8d9fb;
-  background: #f5f9ff;
+  border-left: 4px solid #6faaf5;
+  background: #f2fdff;
+  box-shadow: 0 4px 16px rgba(111, 170, 245, 0.12);
 }
 
 .notification-left {
@@ -216,8 +217,9 @@
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: #5f9bf5;
+  background: #6faaf5;
   flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(111, 170, 245, 0.6);
 }
 
 .notification-content p {
@@ -281,33 +283,122 @@
 }
 
 @media (max-width: 860px) {
-  .notifications-topbar { height: auto; padding: 18px; flex-direction: column; align-items: stretch; }
-  .notifications-topbar-right { flex-wrap: wrap; }
-  .notifications-header-row { flex-direction: column; }
-  .notifications-content { padding: 22px 18px 32px; }
+  .notifications-topbar {
+    height: auto;
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .notifications-topbar-right {
+    flex-wrap: wrap;
+  }
+
+  .notifications-header-row {
+    flex-direction: column;
+  }
+
+  .notifications-content {
+    padding: 22px 18px 32px;
+  }
 }
 
 @media (max-width: 700px) {
-  .notifications-page { flex-direction: column; }
-  .notification-card { flex-direction: column; align-items: flex-start; }
-  .notification-actions { width: 100%; justify-content: flex-end; }
+  .notifications-page {
+    flex-direction: column;
+  }
+
+  .notification-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notification-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 /* DARK MODE */
-.notifications-page.dark-mode { background: #1f2430; color: #f3f4f6; }
-.notifications-page.dark-mode .notifications-topbar { background: #2a3140; border-bottom-color: #3a4354; }
+.notifications-page.dark-mode {
+  background: #1f2430;
+  color: #f3f4f6;
+}
+
+.notifications-page.dark-mode .notifications-topbar {
+  background: #2a3140;
+  border-bottom-color: #3a4354;
+}
+
 .notifications-page.dark-mode .notifications-topbar-left h2,
-.notifications-page.dark-mode .notifications-header-row h1 { color: #f3f4f6; }
-.notifications-page.dark-mode .notifications-header-row p { color: #c7cfdb; }
-.notifications-page.dark-mode .theme-toggle-btn { background: #2a3140; border-color: #485266; color: #f3f4f6; }
-.notifications-page.dark-mode .notifications-bell-btn { color: #d8deea; }
-.notifications-page.dark-mode .mark-all-btn { background: #2a3140; border-color: #485266; color: #c7cfdb; }
-.notifications-page.dark-mode .notification-tab { background: #353d4d; color: #c7cfdb; }
-.notifications-page.dark-mode .notification-tab.active { background: linear-gradient(135deg, #6aaef8 0%, #9ed8e1 100%); color: #ffffff; }
-.notifications-page.dark-mode .notification-card { background: #2a3140; box-shadow: 0 4px 14px rgba(0,0,0,0.2); border-color: #3a4354; }
-.notifications-page.dark-mode .notification-card.unread { background: #263044; border-color: #3a5278; }
-.notifications-page.dark-mode .notification-content h3 { color: #f3f4f6; }
-.notifications-page.dark-mode .notification-content p { color: #c7cfdb; }
-.notifications-page.dark-mode .notification-time { color: #8d95a4; }
-.notifications-page.dark-mode .notification-check-btn { background: #2d4060; color: #7db2ff; }
-.notifications-page.dark-mode .notification-delete-btn { background: #4a2a2a; color: #ff6b6b; }
+.notifications-page.dark-mode .notifications-header-row h1 {
+  color: #f3f4f6;
+}
+
+.notifications-page.dark-mode .notifications-header-row p {
+  color: #c7cfdb;
+}
+
+.notifications-page.dark-mode .theme-toggle-btn {
+  background: #2a3140;
+  border-color: #485266;
+  color: #f3f4f6;
+}
+
+.notifications-page.dark-mode .notifications-bell-btn {
+  color: #d8deea;
+}
+
+.notifications-page.dark-mode .mark-all-btn {
+  color: #6faaf5;
+  border-color: #6faaf5;
+}
+
+.notifications-page.dark-mode .mark-all-btn:hover {
+  background: #6faaf5;
+  color: #fff;
+}
+
+.notifications-page.dark-mode .notification-tab {
+  background: #353d4d;
+  color: #c7cfdb;
+}
+
+.notifications-page.dark-mode .notification-tab.active {
+  background: linear-gradient(135deg, #6aaef8 0%, #9ed8e1 100%);
+  color: #ffffff;
+}
+
+.notifications-page.dark-mode .notification-card {
+  background: #2a3140;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  border-color: #3a4354;
+}
+
+.notifications-page.dark-mode .notification-card.unread {
+  background: linear-gradient(135deg, #263044 0%, #1f2837 100%);
+  border-left: 4px solid #6faaf5;
+  box-shadow: 0 4px 16px rgba(111, 170, 245, 0.15);
+}
+
+.notifications-page.dark-mode .notification-content h3 {
+  color: #f3f4f6;
+}
+
+.notifications-page.dark-mode .notification-content p {
+  color: #c7cfdb;
+}
+
+.notifications-page.dark-mode .notification-time {
+  color: #8d95a4;
+}
+
+.notifications-page.dark-mode .notification-check-btn {
+  background: #2d4060;
+  color: #7db2ff;
+}
+
+.notifications-page.dark-mode .notification-delete-btn {
+  background: #4a2a2a;
+  color: #ff6b6b;
+}

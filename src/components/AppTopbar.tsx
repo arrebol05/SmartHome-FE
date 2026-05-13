@@ -1,4 +1,5 @@
-import { Search } from "lucide-react";
+import { Search, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import AccountMenu from "./AccountMenu";
 import { UI } from "@/constants/ui";
@@ -23,6 +24,7 @@ export default function AppTopbar({
   toggleTheme,
   title,
 }: AppTopbarProps) {
+  const navigate = useNavigate();
   return (
     <header className="app-topbar">
       <div className="app-topbar-left">
@@ -34,11 +36,14 @@ export default function AppTopbar({
           <Search size={UI.TOPBAR_ICON_SIZE} />
           <input
             type="text"
-            placeholder="Search any devices here"
+            placeholder="Tìm thiết bị theo type/mode/state"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+        <button type="button" className="app-notification-btn" onClick={() => navigate("/notifications")}>
+          <Bell size={UI.TOPBAR_ICON_SIZE} />
+        </button>
         <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
         <button
           type="button"

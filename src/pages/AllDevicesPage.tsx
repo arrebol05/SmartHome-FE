@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import AppSidebar from "@/components/AppSidebar";
-import AccountMenu from "@/components/AccountMenu";
+import AppTopbar from "@/components/AppTopbar";
+import { ChevronDown, Settings, Zap, Home } from "lucide-react";
 import { UI } from "@/constants/ui";
-import { Bell, Search, ChevronDown, Settings, Zap, Home } from "lucide-react";
 import { deviceService, toErrorMessage } from "@/services/api";
 import { useAppStore } from "@/store/appStore";
 import type { DeviceMode, DeviceStatusResponse, DeviceType } from "@/types";
@@ -183,33 +182,15 @@ export default function AllDevicesPage() {
       <AppSidebar />
 
       <main className="home-main">
-        <header className="home-topbar">
-          <div className="home-topbar-left">
-            <button
-              type="button"
-              className="home-avatar"
-              onClick={() => setShowAccountMenu((prev) => !prev)}
-            />
-            <h2>Welcome to Meomeo's Home</h2>
-            {showAccountMenu && (
-              <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
-            )}
-          </div>
-
-          <div className="home-topbar-right">
-            <div className="topbar-search-box">
-              <Search size={UI.TOPBAR_ICON_SIZE} />
-              <input
-                type="text"
-                placeholder="Tìm thiết bị theo type/mode/state"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-            <button className="app-bell-btn" type="button"><Bell size={UI.TOPBAR_ICON_SIZE} /></button>
-          </div>
-        </header>
+        <AppTopbar
+          showAccountMenu={showAccountMenu}
+          setShowAccountMenu={setShowAccountMenu}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          themeMode={themeMode}
+          toggleTheme={toggleTheme}
+          title="Welcome to Meomeo's Home"
+        />
 
         <section className="content-wrap">
           <div className="page-heading">

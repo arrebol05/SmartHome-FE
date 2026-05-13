@@ -136,6 +136,33 @@
   box-shadow: 0 4px 12px rgba(95, 155, 245, 0.2);
 }
 
+.app-notification-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.app-notification-btn:hover {
+  background: rgba(95, 155, 245, 0.1);
+}
+
+.app-page.dark-mode .app-notification-btn {
+  color: #e0e0e0;
+}
+
+.app-page.dark-mode .app-notification-btn:hover {
+  background: rgba(95, 155, 245, 0.2);
+}
+
 @media (max-width: 860px) {
   .app-topbar {
     height: auto;

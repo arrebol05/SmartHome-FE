@@ -321,7 +321,7 @@ export default function HomePage() {
           setSearchTerm={setSearchTerm}
           themeMode={themeMode}
           toggleTheme={toggleTheme}
-          title="Welcome to Dokyeom's Home"
+          title="Welcome to Orange's Home"
         />
 
         <section className="home-content">

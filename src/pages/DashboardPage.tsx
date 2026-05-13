@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import AppSidebar from "@/components/AppSidebar";
-import AccountMenu from "@/components/AccountMenu";
-import { UI } from "@/constants/ui";
-import { Bell, Search, Zap } from "lucide-react";
+import AppTopbar from "@/components/AppTopbar";
+import { Zap } from "lucide-react";
 import { dashboardService, toErrorMessage } from "@/services/api";
 import { useAppStore } from "@/store/appStore";
 import "./dashboard.css";
@@ -101,37 +99,21 @@ export default function DashboardPage() {
       <AppSidebar />
 
       <main className="dashboard-main">
-        {/* Topbar */}
-        <header className="dashboard-topbar">
-          <div className="dashboard-topbar-left">
-            <button
-              type="button"
-              className="dashboard-avatar"
-              onClick={() => setShowAccountMenu((p) => !p)}
-            />
-            <h2>Welcome to Meomeo's Home</h2>
-            {showAccountMenu && (
-              <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
-            )}
-          </div>
-          <div className="dashboard-topbar-right">
-            <div className="topbar-search-box">
-              <Search size={UI.TOPBAR_ICON_SIZE} />
-              <input type="text" placeholder="Tìm theo thiết bị, mode, trạng thái"
-                value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            </div>
-            <ThemeToggle mode={themeMode} onToggle={toggleTheme} />
-            <button className="dashboard-bell-btn" type="button">
-              <Bell size={UI.TOPBAR_ICON_SIZE} />
-            </button>
-          </div>
-        </header>
+        <AppTopbar
+          showAccountMenu={showAccountMenu}
+          setShowAccountMenu={setShowAccountMenu}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          themeMode={themeMode}
+          toggleTheme={toggleTheme}
+          title="Welcome to Orange's Home"
+        />
 
         {/* Content */}
         <section className="dashboard-content">
           <div className="dashboard-page-header">
             <div>
-              <h1>Bảng Điều Khiển</h1>
+              <h1>Bảng điều khiển</h1>
               <p>Dữ liệu realtime từ backend qua SSE có Authorization header</p>
               <p>
                 Trạng thái stream: {streamStatus === "connected" ? "Đã kết nối" : streamStatus === "connecting" ? "Đang kết nối" : "Đang kết nối lại"}

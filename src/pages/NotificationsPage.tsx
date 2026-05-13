@@ -1,18 +1,11 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import AppSidebar from "@/components/AppSidebar";
-import AccountMenu from "@/components/AccountMenu";
-import { UI } from "@/constants/ui";
 import AppTopbar from "@/components/AppTopbar";
 import {
-  Bell,
-  Search,
   Check,
   Trash2,
   AlertCircle,
-  CheckCircle2,
   Clock,
   CheckCircle,
 } from "lucide-react";
@@ -28,13 +21,13 @@ type NotificationItem = {
 };
 
 const initialNotifications: NotificationItem[] = [
-  { id: 1, title: "TV - Lỗi Bật", message: "Lỗi kết nối với TV. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "Vừa xong", type: "error", isRead: true },
-  { id: 2, title: "TV - Đã Tắt", message: "Thiết bị đã được tắt thành công", time: "Vừa xong", type: "success", isRead: true },
-  { id: 3, title: "Air Conditioner - Đã Bật", message: "Thiết bị đã được bật thành công", time: "Vừa xong", type: "success", isRead: false },
-  { id: 4, title: "Air Conditioner - Lỗi Bật", message: "Lỗi kết nối với Air Conditioner. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "5 phút trước", type: "error", isRead: false },
-  { id: 5, title: "Air Conditioner - Lỗi Bật", message: "Lỗi kết nối với Air Conditioner. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "5 phút trước", type: "error", isRead: false },
-  { id: 6, title: "Smart Fan - Lỗi Bật", message: "Lỗi kết nối với Smart Fan. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "5 phút trước", type: "error", isRead: false },
-  { id: 7, title: "Smart Fan - Đã Tắt", message: "Thiết bị đã được tắt thành công", time: "1 ngày trước", type: "success", isRead: false },
+  { id: 1, title: "TV - Lỗi bật", message: "Lỗi kết nối với TV. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "Vừa xong", type: "error", isRead: true },
+  { id: 2, title: "TV - Đã tắt", message: "Thiết bị đã được tắt thành công", time: "Vừa xong", type: "success", isRead: true },
+  { id: 3, title: "Điều hòa - Đã bật", message: "Thiết bị đã được bật thành công", time: "Vừa xong", type: "success", isRead: false },
+  { id: 4, title: "Điều hòa - Lỗi bật", message: "Lỗi kết nối với Điều hòa. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "5 phút trước", type: "error", isRead: false },
+  { id: 5, title: "Điều hòa - Lỗi bật", message: "Lỗi kết nối với Điều hòa. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "5 phút trước", type: "error", isRead: false },
+  { id: 6, title: "Quạt điện - Lỗi bật", message: "Lỗi kết nối với Quạt điện. Vui lòng kiểm tra kết nối mạng và thử lại.", time: "5 phút trước", type: "error", isRead: false },
+  { id: 7, title: "Quạt điện - Đã tắt", message: "Thiết bị đã được tắt thành công", time: "1 ngày trước", type: "success", isRead: false },
 ];
 
 type FilterType = "all" | "unread";
@@ -93,7 +86,6 @@ function NotificationCard({
 }
 
 export default function NotificationsPage() {
-  const navigate = useNavigate();
   const { themeMode, toggleTheme } = useTheme();
 
   const [notifications, setNotifications] = useState<NotificationItem[]>(initialNotifications);
@@ -131,7 +123,7 @@ export default function NotificationsPage() {
           setSearchTerm={setSearchTerm}
           themeMode={themeMode}
           toggleTheme={toggleTheme}
-          title="Welcome to Meomeo's Home"
+          title="Welcome to Orange's Home"
         />
 
         {/* Content */}
@@ -142,7 +134,7 @@ export default function NotificationsPage() {
             </div>
             <button type="button" className="mark-all-btn" onClick={handleMarkAllRead}>
               <Check size={16} />
-              <span>Đánh Dấu Tất Cả Đã Đọc</span>
+              <span>Đánh dấu tất cả đã đọc</span>
             </button>
           </div>
 
