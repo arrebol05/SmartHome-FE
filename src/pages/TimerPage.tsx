@@ -34,7 +34,7 @@ function TimerCard({ item, onToggle, onDelete }: { item: TimerItem; onToggle: (i
                 <div className="timer-item-content">
                     <div className="timer-item-title-row">
                         <h3>{item.device}</h3>
-                        <span className={`timer-badge ${item.mode === "BẬT" ? "on" : "off"}`}>{item.mode}</span>
+                        <span className={`timer-badge ${item.enabled ? "on" : "off"}`}>{item.enabled ? "BẬT" : "TẮT"}</span>
                     </div>
                     <div className="timer-item-meta">
                         <span><Home size={16} />{item.room}</span>
@@ -64,12 +64,8 @@ export default function TimerPage() {
     const totalCount = timers.length;
     const activeCount = timers.filter((t) => t.enabled).length;
     const inactiveCount = timers.filter((t) => !t.enabled).length;
-
-    const timerStats = [
-        { id: 1, title: "Tổng số lịch", value: String(totalCount), icon: <Clock3 size={20} />, theme: "blue" },
-        { id: 2, title: "Đang hoạt động", value: String(activeCount), icon: <CheckCircle size={20} />, theme: "green" },
-        { id: 3, title: "Đã tắt", value: String(inactiveCount), icon: <Clock3 size={20} />, theme: "gray" },
-    ];
+    const activePct = totalCount > 0 ? Math.round((activeCount / totalCount) * 100) : 0;
+    const inactivePct = totalCount > 0 ? Math.round((inactiveCount / totalCount) * 100) : 0;
 
     const handleToggleTimer = (id: number) => {
         setTimers((prev) => prev.map((t) => t.id === id ? { ...t, enabled: !t.enabled } : t));
@@ -104,8 +100,7 @@ export default function TimerPage() {
                 <section className="timer-content">
                     <div className="timer-header-row">
                         <div>
-                            <h1>Lịch Hẹn Giờ</h1>
-                            <p>Quản lý và theo dõi lịch trình của bạn</p>
+                            <h1>Lịch hẹn giờ</h1>
                         </div>
                         <button className="create-timer-btn" type="button" onClick={handleCreateTimer}>
                             <Plus size={18} /><span>Tạo Lịch Mới</span>
@@ -113,12 +108,47 @@ export default function TimerPage() {
                     </div>
 
                     <div className="timer-stats-grid">
-                        {timerStats.map((stat) => (
-                            <div className="timer-stat-card" key={stat.id}>
-                                <div className={`timer-stat-icon ${stat.theme}`}>{stat.icon}</div>
-                                <div className="timer-stat-text"><p>{stat.title}</p><h3>{stat.value}</h3></div>
+                        {/* Hero card — total */}
+                        <div className="timer-stat-card primary">
+                            <div className="timer-stat-top">
+                                <span className="timer-stat-label">Tổng số lịch</span>
                             </div>
-                        ))}
+                            <div className="timer-stat-value-row">
+                                <h3>{totalCount}</h3>
+                                <span>Lịch hẹn</span>
+                            </div>
+                            <div className="timer-stat-bar-wrap">
+                                <div className="timer-stat-bar-fill" style={{ width: "100%" }} />
+                            </div>
+                        </div>
+
+                        {/* Active card */}
+                        <div className="timer-stat-card accent-green">
+                            <div className="timer-stat-top">
+                                <span className="timer-stat-label">Đang hoạt động</span>
+                            </div>
+                            <div className="timer-stat-value-row">
+                                <h3>{activeCount}</h3>
+                                <span>Thiết bị</span>
+                            </div>
+                            <div className="timer-stat-bar-wrap" style={{ background: "#e6f9ee" }}>
+                                <div className="timer-stat-bar-fill green" style={{ width: `${activePct}%` }} />
+                            </div>
+                        </div>
+
+                        {/* Inactive card */}
+                        <div className="timer-stat-card accent-gray">
+                            <div className="timer-stat-top">
+                                <span className="timer-stat-label">Đã tắt</span>
+                            </div>
+                            <div className="timer-stat-value-row">
+                                <h3>{inactiveCount}</h3>
+                                <span>Thiết bị</span>
+                            </div>
+                            <div className="timer-stat-bar-wrap" style={{ background: "#f0f2f6" }}>
+                                <div className="timer-stat-bar-fill gray" style={{ width: `${inactivePct}%` }} />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="timer-list">

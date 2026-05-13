@@ -114,7 +114,6 @@ export default function DashboardPage() {
           <div className="dashboard-page-header">
             <div>
               <h1>Bảng điều khiển</h1>
-              <p>Dữ liệu realtime từ backend qua SSE có Authorization header</p>
               <p>
                 Trạng thái stream: {streamStatus === "connected" ? "Đã kết nối" : streamStatus === "connecting" ? "Đang kết nối" : "Đang kết nối lại"}
               </p>

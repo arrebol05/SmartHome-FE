@@ -28,7 +28,7 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [profile, setProfile] = useState({
-    username: "meomeo",
+    username: "Orange",
     email: "meomeo@smarthome.vn",
     phone: "+84 123 456 789",
     address: "123 Đường ABC, Quận 1, TP.HCM",
@@ -73,7 +73,7 @@ export default function ProfilePage() {
         <section className="profile-content">
           <div className="profile-page-header">
             <div>
-              <h1>Thông Tin Tài Khoản</h1>
+              <h1>Thông tin tài khoản</h1>
               <p>Quản lý thông tin cá nhân và cài đặt tài khoản</p>
             </div>
           </div>
