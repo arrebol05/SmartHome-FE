@@ -144,14 +144,14 @@ export default function NotificationsPage() {
               className={`notification-tab ${activeFilter === "all" ? "active" : ""}`}
               onClick={() => setActiveFilter("all")}
             >
-              Tất Cả ({notifications.length})
+              Tất cả ({notifications.length})
             </button>
             <button
               type="button"
               className={`notification-tab ${activeFilter === "unread" ? "active" : ""}`}
               onClick={() => setActiveFilter("unread")}
             >
-              Chưa Đọc ({unreadCount})
+              Chưa đọc ({unreadCount})
             </button>
           </div>
 

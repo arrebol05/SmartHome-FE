@@ -286,8 +286,6 @@
   .notifications-topbar {
     height: auto;
     padding: 18px;
-    flex-direction: column;
-    align-items: stretch;
   }
 
   .notifications-topbar-right {
@@ -304,10 +302,6 @@
 }
 
 @media (max-width: 700px) {
-  .notifications-page {
-    flex-direction: column;
-  }
-
   .notification-card {
     flex-direction: column;
     align-items: flex-start;

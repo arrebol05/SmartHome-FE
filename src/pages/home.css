@@ -670,21 +670,6 @@
 }
 
 @media (max-width: 700px) {
-  .home-page {
-    flex-direction: column;
-  }
-
-  .home-sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    padding: 14px;
-  }
-
-  .home-sidebar-links {
-    flex-direction: row;
-  }
-
   .home-content {
     padding: 20px 16px 28px;
   }

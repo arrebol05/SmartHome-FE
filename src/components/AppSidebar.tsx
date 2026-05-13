@@ -20,18 +20,16 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
 
   return (
     <aside className={`app-sidebar ${className}`}>
-      {/* Nút Home — trên cùng */}
-      <button
-        className={`app-nav-btn ${isHome ? "active" : "ghost"}`}
-        type="button"
-        title="Trang chủ"
-        onClick={() => navigate("/home")}
-      >
-        <Home size={UI.SIDEBAR_ICON_SIZE} />
-      </button>
-
-      {/* Các nút giữa — đẩy xuống đáy */}
       <div className="app-sidebar-links">
+        <button
+          className={`app-nav-btn ${isHome ? "active" : "ghost"}`}
+          type="button"
+          title="Trang chủ"
+          onClick={() => navigate("/home")}
+        >
+          <Home size={UI.SIDEBAR_ICON_SIZE} />
+        </button>
+        
         <button
           className={`app-nav-btn ${isNotifications ? "active" : "ghost"}`}
           type="button"

@@ -413,21 +413,6 @@
 }
 
 @media (max-width: 700px) {
-  .timer-page {
-    flex-direction: column;
-  }
-
-  .timer-sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    padding: 14px;
-  }
-
-  .timer-sidebar-links {
-    flex-direction: row;
-  }
-
   .timer-content {
     padding: 22px 18px 28px;
   }

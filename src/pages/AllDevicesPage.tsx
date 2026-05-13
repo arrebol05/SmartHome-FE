@@ -194,35 +194,34 @@ export default function AllDevicesPage() {
 
         <section className="content-wrap">
           <div className="page-heading">
-            <h1>Tất Cả Thiết Bị</h1>
-            <p>Điều khiển thiết bị LED/FAN từ backend</p>
+            <h1>Tất cả thiết bị</h1>
             {error && <p style={{ color: "#d14343", marginTop: 8 }}>{error}</p>}
           </div>
 
           <section className="summary-grid">
             <div className="summary-card primary">
               <div>
-                <p>Tổng Thiết Bị</p>
+                <p>Tổng thiết bị</p>
                 <h3>{totalDevices}</h3>
                 <span>{activeDevices} đang hoạt động</span>
               </div>
-              <div className="summary-icon"><Settings size={UI.TOPBAR_ICON_SIZE} /></div>
+
             </div>
             <div className="summary-card">
               <div>
-                <p>Thiết Bị Bật</p>
+                <p>Thiết bị bật</p>
                 <h3>{activeDevices}</h3>
-                <span>Đang ON</span>
+                <span>Đang hoạt động</span>
               </div>
-              <div className="summary-icon soft"><Zap size={UI.TOPBAR_ICON_SIZE} /></div>
+
             </div>
             <div className="summary-card">
               <div>
-                <p>Phòng Đang Dùng</p>
+                <p>Phòng đang dùng</p>
                 <h3>{activeDevices > 0 ? 1 : 0}</h3>
-                <span>/ 1 phòng</span>
+                <span>/ 4 phòng</span>
               </div>
-              <div className="summary-icon soft"><Home size={UI.TOPBAR_ICON_SIZE} /></div>
+
             </div>
           </section>
 
