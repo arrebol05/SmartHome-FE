@@ -30,7 +30,7 @@ export default function AccountMenu({ onClose, themeMode }: AccountMenuProps) {
           <User size={24} />
         </div>
         <div className="account-menu-text">
-          <strong>Thông Tin Tài Khoản</strong>
+          <strong>Thông tin tài khoản</strong>
           <span>Xem và chỉnh sửa hồ sơ</span>
         </div>
         <ChevronRight size={26} className="account-menu-arrow" />
@@ -49,7 +49,7 @@ export default function AccountMenu({ onClose, themeMode }: AccountMenuProps) {
           <LogOut size={24} />
         </div>
         <div className="account-menu-text">
-          <strong>Đăng Xuất</strong>
+          <strong>Đăng xuất</strong>
           <span>Thoát khỏi tài khoản</span>
         </div>
       </button>
