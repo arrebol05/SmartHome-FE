@@ -28,12 +28,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PublicLoginRoute />} />
-        <Route path="/devices" element={<AllDevicesPage />} />
-        <Route path="/timers" element={<TimerPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/devices" element={<ProtectedRoute><AllDevicesPage /></ProtectedRoute>} />
+        <Route path="/timers" element={<ProtectedRoute><TimerPage /></ProtectedRoute>} />
+        <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
     </BrowserRouter>
