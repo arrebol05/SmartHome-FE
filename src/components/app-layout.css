@@ -1,18 +1,22 @@
 .app-sidebar {
   width: 72px;
+  height: 515px;
   background: #f9fbfd;
   border-right: 1px solid #e7edf3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  gap: 30px;
+  padding: 80px 0;
+  gap: 0;
 }
 
 .app-sidebar-links {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 18px;
+  margin-top: auto;
+  padding-bottom: 8px;
 }
 
 .app-nav-btn,
@@ -78,6 +82,7 @@
 }
 
 .app-topbar-right {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 14px;

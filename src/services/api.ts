@@ -157,7 +157,7 @@ export const dashboardService = {
             signal: controller.signal,
             openWhenHidden: true,
             fetch: authFetch,
-            onopen(response) {
+            async onopen(response) {
                 if (response.ok) {
                     handlers.onOpen?.();
                     return;

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Search } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import AccountMenu from "./AccountMenu";
@@ -28,9 +27,6 @@ export default function AppTopbar({
     <header className="app-topbar">
       <div className="app-topbar-left">
         <h2>{title}</h2>
-        {showAccountMenu && (
-          <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
-        )}
       </div>
 
       <div className="app-topbar-right">
@@ -49,6 +45,9 @@ export default function AppTopbar({
           className="app-avatar"
           onClick={() => setShowAccountMenu(!showAccountMenu)}
         />
+        {showAccountMenu && (
+          <AccountMenu onClose={() => setShowAccountMenu(false)} themeMode={themeMode} />
+        )}
       </div>
     </header>
   );

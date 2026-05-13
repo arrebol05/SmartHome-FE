@@ -3,10 +3,10 @@ import { useTheme } from "@/context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import AppTopbar from "@/components/AppTopbar";
 import { UI } from "@/constants/ui";
+import AppSidebar from "@/components/AppSidebar";
 import {
-  Home, Zap, LayoutGrid, Clock3, Settings, Layers,
-  Droplets, Thermometer, Star, Fan, Monitor,
-  Plus, X,
+  Droplets, Thermometer,
+  X, Plus,
 } from "lucide-react";
 import "./home.css";
 
@@ -17,20 +17,38 @@ type SmartDevice = {
   subtitle: string;
   statusText: string;
   active: boolean;
-  iconType: "star" | "fan" | "monitor" | "blank";
   level: number;
   mode: "OFF" | "AUTO" | "SWING";
   percent: number;
 };
 
 const initialDevices: SmartDevice[] = [
-  { id: 1, name: "Smart LED", room: "Phòng khách", subtitle: "ON", statusText: "Active", active: true, iconType: "blank", level: 3, mode: "AUTO", percent: 65 },
-  { id: 2, name: "Smart Fan", room: "Phòng khách", subtitle: "Level 3", statusText: "Active", active: true, iconType: "fan", level: 3, mode: "AUTO", percent: 65 },
-  { id: 3, name: "Air Conditioner", room: "Phòng khách", subtitle: "24°C", statusText: "Inactive", active: false, iconType: "blank", level: 1, mode: "OFF", percent: 0 },
-  { id: 4, name: "TV", room: "Phòng khách", subtitle: "Channel 5", statusText: "Active", active: true, iconType: "monitor", level: 2, mode: "AUTO", percent: 40 },
+  // Phòng khách (cũ)
+  { id: 1, name: "Smart LED", room: "Phòng khách", subtitle: "ON", statusText: "Active", active: true, level: 3, mode: "AUTO", percent: 65 },
+  { id: 2, name: "Smart Fan", room: "Phòng khách", subtitle: "Level 3", statusText: "Active", active: true, level: 3, mode: "AUTO", percent: 65 },
+  { id: 3, name: "Air Conditioner", room: "Phòng khách", subtitle: "24°C", statusText: "Inactive", active: false, level: 1, mode: "OFF", percent: 0 },
+  { id: 4, name: "TV", room: "Phòng khách", subtitle: "Channel 5", statusText: "Active", active: true, level: 2, mode: "AUTO", percent: 40 },
+
+  // Phòng ngủ (mới)
+  { id: 5, name: "Smart LED", room: "Phòng ngủ", subtitle: "ON", statusText: "Active", active: true, level: 2, mode: "AUTO", percent: 40 },
+  { id: 6, name: "Air Conditioner", room: "Phòng ngủ", subtitle: "22°C", statusText: "Active", active: true, level: 3, mode: "AUTO", percent: 60 },
+  { id: 7, name: "Smart Curtain", room: "Phòng ngủ", subtitle: "Đã mở", statusText: "Active", active: true, level: 3, mode: "AUTO", percent: 75 },
+  { id: 8, name: "Smart Speaker", room: "Phòng ngủ", subtitle: "Volume 5", statusText: "Inactive", active: false, level: 1, mode: "OFF", percent: 0 },
+
+  // Phòng bếp (mới)
+  { id: 9, name: "Smart LED", room: "Phòng bếp", subtitle: "ON", statusText: "Active", active: true, level: 3, mode: "AUTO", percent: 80 },
+  { id: 10, name: "Hood Fan", room: "Phòng bếp", subtitle: "Level 2", statusText: "Active", active: true, level: 2, mode: "AUTO", percent: 50 },
+  { id: 11, name: "Smart Fridge", room: "Phòng bếp", subtitle: "4°C", statusText: "Active", active: true, level: 2, mode: "AUTO", percent: 55 },
+  { id: 12, name: "Microwave", room: "Phòng bếp", subtitle: "OFF", statusText: "Inactive", active: false, level: 1, mode: "OFF", percent: 0 },
+
+  // Phòng tắm (mới)
+  { id: 13, name: "Smart LED", room: "Phòng tắm", subtitle: "ON", statusText: "Active", active: true, level: 2, mode: "AUTO", percent: 45 },
+  { id: 14, name: "Water Heater", room: "Phòng tắm", subtitle: "50°C", statusText: "Active", active: true, level: 3, mode: "AUTO", percent: 70 },
+  { id: 15, name: "Exhaust Fan", room: "Phòng tắm", subtitle: "Level 1", statusText: "Inactive", active: false, level: 1, mode: "OFF", percent: 0 },
+  { id: 16, name: "Smart Mirror", room: "Phòng tắm", subtitle: "ON", statusText: "Active", active: true, level: 2, mode: "AUTO", percent: 50 },
 ];
 
-const initialRooms = ["Phòng khách", "Phòng ngủ", "Phòng bếp", "Phòng tắm", "Sân vườn"];
+const initialRooms = ["Phòng khách", "Phòng ngủ", "Phòng bếp", "Phòng tắm"];
 
 /* ── RING SVG ── */
 function Ring({ percent, size = 160 }: { percent: number; size?: number }) {
@@ -191,14 +209,26 @@ function AddPopup({
 
 /* ── DEVICE CARD ── */
 function DeviceCard({
-  device, onToggle, onOpen,
+  device, onToggle, onOpen, isEditing, onDelete,
 }: {
   device: SmartDevice;
   onToggle: (id: number) => void;
   onOpen: (d: SmartDevice) => void;
+  isEditing: boolean;
+  onDelete: (id: number) => void;
 }) {
   return (
-    <div className="home-device-card" style={{ cursor: "pointer" }} onClick={() => onOpen(device)}>
+    <div className="home-device-card" style={{ cursor: "pointer" }} onClick={() => !isEditing && onOpen(device)}>
+      {isEditing && (
+        <button
+          type="button"
+          className="device-delete-btn"
+          onClick={(e) => { e.stopPropagation(); onDelete(device.id); }}
+        >
+          <X size={14} />
+        </button>
+      )}
+
       <div className="home-device-main">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px" }}>
           <div>
@@ -222,19 +252,9 @@ function DeviceCard({
           {device.active ? "Active" : "Inactive"}
         </strong>
       </div>
+
     </div>
   );
-}
-
-function renderDeviceIcon(type: SmartDevice["iconType"], active: boolean) {
-  const cls = "home-device-svg";
-  if (!active && type === "blank") return <div className="home-device-placeholder" />;
-  switch (type) {
-    case "star": return <Star className={cls} size={UI.DEVICE_ICON_SIZE} />;
-    case "fan": return <Fan className={cls} size={UI.DEVICE_ICON_SIZE} />;
-    case "monitor": return <Monitor className={cls} size={UI.DEVICE_ICON_SIZE} />;
-    default: return <div className="home-device-placeholder" />;
-  }
 }
 
 /* ── HOME PAGE ── */
@@ -249,6 +269,7 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDevice, setSelectedDevice] = useState<SmartDevice | null>(null);
   const [showAddPopup, setShowAddPopup] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleToggleDevice = (id: number) => {
     setDevices((prev) => prev.map((d) =>
@@ -271,9 +292,13 @@ export default function HomePage() {
       setDevices((prev) => [...prev, {
         id: Date.now(), name: name.trim(), room: selectedRoom,
         subtitle: "OFF", statusText: "Inactive", active: false,
-        iconType: "blank", level: 1, mode: "OFF", percent: 0,
+        level: 1, mode: "OFF", percent: 0,
       }]);
     }
+  };
+
+  const handleDeleteDevice = (id: number) => {
+    setDevices((prev) => prev.filter((d) => d.id !== id));
   };
 
   const filteredDevices = useMemo(() => {
@@ -286,29 +311,7 @@ export default function HomePage() {
 
   return (
     <div className={`home-page ${themeMode === "dark" ? "dark-mode" : ""}`}>
-      {/* Sidebar */}
-      <aside className="home-sidebar">
-        <button className="home-nav-btn active" type="button" title="Trang chủ" onClick={() => navigate("/home")}>
-          <Home size={UI.SIDEBAR_ICON_SIZE} />
-        </button>
-        <div className="home-sidebar-links">
-          <button className="home-nav-ghost" type="button" title="Thông báo" onClick={() => navigate("/notifications")}>
-            <Zap size={UI.SIDEBAR_ICON_SIZE} />
-          </button>
-          <button className="home-nav-ghost" type="button" title="Thiết bị" onClick={() => navigate("/devices")}>
-            <Layers size={UI.SIDEBAR_ICON_SIZE} />
-          </button>
-          <button className="home-nav-ghost" type="button" title="Lịch hẹn giờ" onClick={() => navigate("/timers")}>
-            <Clock3 size={UI.SIDEBAR_ICON_SIZE} />
-          </button>
-          <button className="home-nav-ghost" type="button" title="Bảng điều khiển" onClick={() => navigate("/dashboard")}>
-            <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
-          </button>
-          <button className="home-nav-ghost" type="button" title="Cài đặt" onClick={() => navigate("/settings")}>
-            <Settings size={UI.SIDEBAR_ICON_SIZE} />
-          </button>
-        </div>
-      </aside>
+      <AppSidebar />
 
       <main className="home-main">
         <AppTopbar
@@ -318,12 +321,17 @@ export default function HomePage() {
           setSearchTerm={setSearchTerm}
           themeMode={themeMode}
           toggleTheme={toggleTheme}
-          title="Welcome to Meomeo's Home"
+          title="Welcome to Dokyeom's Home"
         />
 
         <section className="home-content">
           <section className="home-summary-section">
-            <h1>Tổng quan</h1>
+            <div className="section-header">
+              <h1 className="section-title">Tổng quan</h1>
+              <button className="section-action-btn" onClick={() => navigate("/dashboard")}>
+                Chi tiết
+              </button>
+            </div>
             <section className="home-summary-grid">
               <div className="home-circle-card">
                 <div className="home-card-head"><h4>Độ ẩm</h4><Droplets size={UI.TOPBAR_ICON_SIZE} /></div>
@@ -341,7 +349,7 @@ export default function HomePage() {
               </div>
               <div className="home-energy-card">
                 <h3>Tổng tiêu thụ</h3>
-                <div className="home-energy-row"><span>Tháng 3</span><strong>245 kWh</strong></div>
+                <div className="home-energy-row"><span>Tháng 5</span><strong>245 kWh</strong></div>
                 <div className="home-energy-bar"><div className="home-energy-bar-fill" /></div>
                 <div className="home-energy-divider" />
                 <div className="home-energy-stats">
@@ -354,10 +362,18 @@ export default function HomePage() {
           </section>
 
           <section className="home-device-section">
-            <h1>Thiết bị thông minh</h1>
+            <div className="section-header">
+              <h1 className="section-title">Thiết bị thông minh</h1>
+              <button
+                className={`section-action-btn ${isEditing ? "editing" : ""}`}
+                onClick={() => setIsEditing((prev) => !prev)}
+              >
+                {isEditing ? "Xong" : "Chỉnh sửa"}
+              </button>
+            </div>
             <div className="home-device-grid">
               {filteredDevices.map((device) => (
-                <DeviceCard key={device.id} device={device} onToggle={handleToggleDevice} onOpen={setSelectedDevice} />
+                <DeviceCard key={device.id} device={device} onToggle={handleToggleDevice} onOpen={setSelectedDevice} isEditing={isEditing} onDelete={handleDeleteDevice} />
               ))}
             </div>
           </section>

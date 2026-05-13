@@ -37,7 +37,7 @@ export default function LoginPage() {
     <div className="smart-login-page">
       <div className="smart-login-card">
         <div className="smart-login-header">
-          <h1>Đăng Nhập</h1>
+          <h1>Đăng nhập</h1>
           <p>Chào mừng bạn quay trở lại!</p>
         </div>
 
@@ -93,10 +93,6 @@ export default function LoginPage() {
           <button type="submit" className="smart-login-btn" disabled={isSubmitting}>
             {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
           </button>
-
-          <p className="smart-login-register">
-            Chưa có tài khoản? <a href="/">Đăng ký ngay</a>
-          </p>
         </form>
       </div>
     </div>

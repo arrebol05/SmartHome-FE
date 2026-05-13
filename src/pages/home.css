@@ -147,6 +147,37 @@
   padding: 20px 30px 16px;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #26263a;
+  margin: 0;
+}
+
+.section-action-btn {
+  background: transparent;
+  border: 1.5px solid #6faaf5;
+  color: #6faaf5;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.section-action-btn:hover {
+  background: #6faaf5;
+  color: #fff;
+}
+
 .home-summary-grid {
   display: grid;
   grid-template-columns: 2fr 2fr 6fr;
@@ -290,11 +321,36 @@
 }
 
 .home-device-card {
+  position: relative;
   background: #ffffff;
   border-radius: 24px;
   box-shadow: 0 12px 24px rgba(33, 48, 86, 0.1);
   padding: 0px 24px 20px;
   min-height: 100px;
+}
+
+.device-delete-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e84444;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(232, 68, 68, 0.35);
+}
+
+.section-action-btn.editing {
+  background: #5f9bf5;
+  color: white;
+  border-color: #5f9bf5;
 }
 
 .home-device-top {
@@ -416,6 +472,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  position: fixed;
+  width: 1400px;
 }
 
 .home-room-tabs {
@@ -459,7 +517,7 @@
 .account-menu {
   position: absolute;
   top: 56px;
-  left: 0;
+  right: 0;
   width: 320px;
   max-width: calc(100vw - 40px);
   background: #ffffff;
@@ -606,8 +664,8 @@
 
   .account-menu {
     width: 100%;
-    left: 0;
-    right: auto;
+    right: 0;
+    left: auto;
   }
 }
 
@@ -978,18 +1036,19 @@
   position: fixed;
   inset: 0;
   z-index: 100;
+  pointer-events: auto;
+  background: transparent;
 }
 
 .add-popup {
   position: absolute;
   bottom: calc(100% + 10px);
   right: 0;
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 16px 32px rgba(30, 45, 89, 0.16);
+  border-radius: 16px;
   overflow: hidden;
-  z-index: 101;
+  z-index: 102;
   min-width: 160px;
+  pointer-events: auto;
 }
 
 .add-popup-item {
@@ -997,26 +1056,29 @@
   border: none;
   background: #ffffff;
   padding: 14px 22px;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: #2a3041;
   cursor: pointer;
   text-align: center;
-  transition: background 0.15s ease;
+  transition: background 0.3s ease;
   display: block;
+  pointer-events: auto;
 }
 
 .add-popup-item+.add-popup-item {
-  border-top: 1px solid #eef1f5;
+  border-top: 3px solid #eef1f5;
 }
 
 .add-popup-item:hover {
-  background: #f4f8fb;
+  background: #f0f4fa;
+  border-radius: 16px;
 }
 
 /* Dark mode — add popup */
 .add-popup.dark-mode {
   background: #2a3140;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
 }
 
 .add-popup.dark-mode .add-popup-item {

@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Zap, Layers, Clock3, LayoutGrid, Settings } from "lucide-react";
+import { Home, Bell, Layers, Clock3, LayoutGrid, Settings } from "lucide-react";
 import { UI } from "@/constants/ui";
 import "./app-layout.css";
 
@@ -11,15 +11,16 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isHome          = location.pathname === "/home";
+  const isHome = location.pathname === "/home";
   const isNotifications = location.pathname === "/notifications";
-  const isDevices       = location.pathname === "/devices";
-  const isTimers        = location.pathname === "/timers";
-  const isDashboard     = location.pathname === "/dashboard";
-  const isSettings      = location.pathname === "/settings";
+  const isDevices = location.pathname === "/devices";
+  const isTimers = location.pathname === "/timers";
+  const isDashboard = location.pathname === "/dashboard";
+  const isSettings = location.pathname === "/settings";
 
   return (
     <aside className={`app-sidebar ${className}`}>
+      {/* Nút Home — trên cùng */}
       <button
         className={`app-nav-btn ${isHome ? "active" : "ghost"}`}
         type="button"
@@ -29,6 +30,7 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
         <Home size={UI.SIDEBAR_ICON_SIZE} />
       </button>
 
+      {/* Các nút giữa — đẩy xuống đáy */}
       <div className="app-sidebar-links">
         <button
           className={`app-nav-btn ${isNotifications ? "active" : "ghost"}`}
@@ -36,7 +38,7 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
           title="Thông báo"
           onClick={() => navigate("/notifications")}
         >
-          <Zap size={UI.SIDEBAR_ICON_SIZE} />
+          <Bell size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
         <button
@@ -66,8 +68,9 @@ export default function AppSidebar({ className = "" }: AppSidebarProps) {
           <LayoutGrid size={UI.SIDEBAR_ICON_SIZE} />
         </button>
 
+        {/* Settings — sát đáy */}
         <button
-          className={`app-nav-btn ${isSettings ? "active blue" : "ghost"}`}
+          className={`app-nav-btn ${isSettings ? "active" : "ghost"}`}
           type="button"
           title="Cài đặt"
           onClick={() => navigate("/settings")}
